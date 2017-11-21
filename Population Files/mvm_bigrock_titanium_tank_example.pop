@@ -1,0 +1,464 @@
+// Imports bot templates from other pop files (Valve robots in this case).
+#base robot_giant.pop
+#base robot_standard.pop
+
+WaveSchedule
+{
+	// Init
+	StartingCurrency 1500
+	RespawnWaveTime 6
+	CanBotsAttackWhileInSpawnRoom no
+	
+	// Bot templates
+	Templates
+	{
+	
+	}
+
+	// Sentry buster mission
+	Mission
+	{
+		Objective DestroySentries
+		InitialCooldown 20
+		Where spawnbot
+		BeginAtWave 1
+		RunForThisManyWaves 9
+		CooldownTime 20
+		DesiredCount 1
+		TFBot
+		{
+			Template T_TFBot_SentryBuster
+		}
+	}
+	
+	// Wave 1 spies
+	Mission
+	{
+		Objective Spy
+		InitialCooldown 90
+		Where spawnbot_mission_spy
+		BeginAtWave 1
+		RunForThisManyWaves 2
+		CooldownTime 60
+		DesiredCount 3
+		TFBot
+		{
+			Template T_TFBot_Spy
+		}
+	}
+	
+	// Wave 2 sydney snipers
+	Mission
+	{
+		Objective Sniper
+		InitialCooldown 120
+		Where spawnbot_mission_sniper
+		BeginAtWave 1
+		RunForThisManyWaves 1
+		CooldownTime 60
+		DesiredCount 2
+		TFBot
+		{
+			Template T_TFBot_Sniper_Sydney_Sleeper
+		}
+	}
+	
+	// Wave 1
+	Wave
+	{
+		StartWaveOutput
+		{
+			Target wave_start_relay
+			Action Trigger
+		}
+		DoneOutput
+		{
+			Target wave_finished_relay
+			Action trigger
+		}
+		
+		// 30 scattergun scouts
+		WaveSpawn
+		{
+			Name "wave1a"
+			Where spawnbot
+			TotalCount 30
+			MaxActive 6
+			SpawnCount 2
+			WaitBeforeStarting 0
+			WaitBetweenSpawns 10
+			TotalCurrency 100
+			TFBot
+			{
+				Class Scout
+				Skill Expert
+			}
+		}
+		
+		// 100 demoknights (spawns sporadically throughout the wave)
+		WaveSpawn
+		{
+			Name "wave1b"
+			Where spawnbot
+			TotalCount 100
+			MaxActive 12
+			SpawnCount 4
+			WaitBeforeStarting 5
+			WaitBetweenSpawns 15
+			TotalCurrency 100
+			TFBot
+			{
+				Template T_TFBot_Demoman_Knight
+			}
+		}
+		
+		// 2 squads of 1 giant pyro and 4 uber medics on each
+		WaveSpawn
+		{
+			Name "wave1c"
+			Where spawnbot
+			TotalCount 10
+			MaxActive 10
+			SpawnCount 5
+			WaitBeforeStarting 30
+			WaitBetweenSpawns 45
+			TotalCurrency 200
+			Squad
+			{
+				TFBot
+				{
+					Template T_TFBot_Giant_Pyro
+				}
+				TFBot
+				{
+					Template T_TFBot_Medic
+				}
+				TFBot
+				{
+					Template T_TFBot_Medic
+				}
+				TFBot
+				{
+					Template T_TFBot_Medic
+				}
+				TFBot
+				{
+					Template T_TFBot_Medic
+				}
+			}
+		}
+		
+		// Infinite support sandman scouts (after the scatterguns all die)
+		WaveSpawn
+		{
+			WaitForAllDead "wave1a"
+			Where spawnbot
+			TotalCount 25
+			MaxActive 4
+			SpawnCount 2
+			WaitBeforeStarting 0
+			WaitBetweenSpawns 5
+			TotalCurrency 100
+			Support 1
+			TFBot
+			{
+				Template T_TFBot_Scout_Sandman_FastCharge
+			}
+		}
+		
+		// Crit soldiers (after the last giant pyro squad spawns in)
+		WaveSpawn
+		{
+			Name "wave1e"
+			WaitForAllSpawned "wave1c"
+			Where spawnbot
+			TotalCount 35
+			MaxActive 8
+			SpawnCount 4
+			WaitBeforeStarting 15
+			WaitBetweenSpawns 10
+			TotalCurrency 100
+			TFBot
+			{
+				Class Soldier
+				Skill Expert
+				Attributes AlwaysCrit
+			}
+		}
+		
+		// Giant heavies (after the last giant pyro squad dies)
+		WaveSpawn
+		{
+			Name "wave1f"
+			WaitForAllDead "wave1c"
+			Where spawnbot
+			TotalCount 2
+			MaxActive 1
+			SpawnCount 1
+			WaitBeforeStarting 0	// Start immediately after the giant pyro squad dies
+			WaitBetweenSpawns 30
+			TotalCurrency 200
+			TFBot
+			{
+				Template T_TFBot_Giant_Heavyweapons
+			}
+		}
+	}
+	
+	// Wave 2
+	Wave
+	{
+		StartWaveOutput
+		{
+			Target wave_start_relay
+			Action Trigger
+		}
+		DoneOutput
+		{
+			Target wave_finished_relay
+			Action trigger
+		}
+		
+		// Tank on left path
+		WaveSpawn
+		{
+			Name "wave2a"
+			TotalCount 1
+			MaxActive 1
+			SpawnCount 1
+			WaitBeforeStarting 0	// Start immediately
+			WaitBetweenSpawns 0		// Irrelevant - only 1 tank in this wavespawn
+			TotalCurrency 100
+			FirstSpawnOutput
+			{
+				Target boss_spawn_relay
+				Action Trigger
+			}
+			Tank
+			{
+				Name "tankboss"
+				Health 15000
+				Speed 75
+				StartingPathTrackNode "boss_path_a1"		// Left path
+				OnKilledOutput
+				{
+					Target boss_dead_relay
+					Action Trigger
+				}
+				OnBombDroppedOutput
+				{
+					Target boss_deploy_relay
+					Action Trigger
+				}
+			}
+		}
+		
+		// Tank on right path
+		WaveSpawn
+		{
+			Name "wave2a"
+			TotalCount 1
+			MaxActive 1
+			SpawnCount 1
+			WaitBeforeStarting 0	// Start immediately
+			WaitBetweenSpawns 0		// Irrelevant - only 1 tank in this wavespawn
+			TotalCurrency 100
+			FirstSpawnOutput
+			{
+				Target boss_spawn_relay
+				Action Trigger
+			}
+			Tank
+			{
+				Name "tankboss"
+				Health 15000
+				Speed 75
+				StartingPathTrackNode "boss_path_b1"	// Right path
+				OnKilledOutput
+				{
+					Target boss_dead_relay
+					Action Trigger
+				}
+				OnBombDroppedOutput
+				{
+					Target boss_deploy_relay
+					Action Trigger
+				}
+			}
+		}
+		
+		// 5 giant scouts; spawn them in slow enough so they and the tanks should all die at around the same time.
+		WaveSpawn
+		{
+			Name "wave2a"			// Have to name this the same as the tanks, because of wavespawn wave2d...
+			Where spawnbot
+			TotalCount 5
+			MaxActive 2 			
+			SpawnCount 1
+			WaitBeforeStarting 15	// Let players get distracted by the tanks first
+			WaitBetweenSpawns 30	// Don't spawn them in too fast, or else players can spawncamp the bomb to clear them out quickly
+			TotalCurrency 200
+			TFBot
+			{
+				Template T_TFBot_Giant_Scout_Fast
+			}
+		}
+		
+		// Crit iron bomber demos
+		WaveSpawn
+		{
+			Name "wave2b"
+			Where spawnbot
+			TotalCount 16
+			MaxActive 6
+			SpawnCount 2
+			WaitBeforeStarting 5
+			WaitBetweenSpawns 10
+			TotalCurrency 100
+			TFBot
+			{
+				Class Demoman
+				Skill Expert
+				Name "Iron Bomber Demoman"
+				WeaponRestrictions PrimaryOnly
+				Attributes AlwaysCrit
+				Item "The Iron Bomber"
+			}
+		}
+		
+		// Deflector heavies with an uber medic on each
+		WaveSpawn
+		{
+			Name "wave2c"
+			Where spawnbot
+			TotalCount 20
+			MaxActive 4
+			SpawnCount 2
+			WaitBeforeStarting 10
+			WaitBetweenSpawns 15
+			TotalCurrency 100
+			Squad
+			{
+				TFBot								// For a template this large, probably best to make it its own bot template
+				{
+					Name "Deflector Heavy"
+					Class Heavyweapons
+					Skill Hard
+					ClassIcon heavy_deflector
+					Item "Deflector"
+					Item "The U-clank-a"
+					WeaponRestrictions PrimaryOnly
+					MaxVisionRange 1200
+					ItemAttributes
+					{
+						ItemName "Deflector"
+						"attack projectiles" 1
+					}
+				}
+				TFBot
+				{
+					Template T_TFBot_Medic
+				}
+			}
+		}
+		
+		// 5 giant soldiers, after the tanks and giant scouts are all dead.
+		// Deflector heavies with an uber medic on each
+		WaveSpawn
+		{
+			Name "wave2d"
+			WaitForAllDead "wave2a"		// The tank and giant scout wavespawns are named the same, so all 3 wavespawns must be dead for this wavespawn to start.
+			Where spawnbot
+			TotalCount 5
+			MaxActive 2
+			SpawnCount 1
+			WaitBeforeStarting 0		// Start immediately once the last tank/scout dies
+			WaitBetweenSpawns 20
+			TotalCurrency 200
+			TFBot
+			{
+				Template T_TFBot_Giant_Soldier_Spammer
+			}
+		}
+		
+		// Crit syringe gun medics infinite support (after the deflector heavies finish spawning)
+		WaveSpawn
+		{
+			Name "wave2e"
+			WaitForAllSpawned "wave2c"
+			Where spawnbot
+			TotalCount 50
+			MaxActive 4					// Don't let them make up a huge chunk of the robots team
+			SpawnCount 2
+			WaitBeforeStarting 5
+			WaitBetweenSpawns 10
+			TotalCurrency 100
+			Support 1
+			
+			// The outline said combat medics, which usually implies syringe gun (typically blutsauger).
+			// However, let's spice up things by RNG'ing between blutsauger and crossbow medics to give players a variety of combat medics.
+			RandomChoice
+			{
+				// Syringe gun medic
+				TFBot
+				{
+					Class Medic
+					Skill Expert
+					Name "Blutsauger Medic"
+					Item "The Blutsauger"
+					ClassIcon medic_syringe				// Load the leaderboard_class_medic_syringe.vmt file on the wave HUD
+					WeaponRestrictions PrimaryOnly		// Need this to force them to not use their medigun
+					Attributes AlwaysCrit
+					Attributes AlwaysFireWeapon			// Need this to force their AI to fire their non-default weapon
+					ItemAttributes
+					{
+						ItemName "The Blutsauger"
+						"mad milk syringes" 1
+					}
+				}
+				
+				// Crossbow medic
+				TFBot
+				{
+					Class Medic
+					Skill Expert
+					Name "Crossbow Medic"
+					Item "The Crusader's Crossbow"
+					ClassIcon medic_crossbow			// Load the leaderboard_class_medic_crossbow.vmt file on the wave HUD
+					WeaponRestrictions PrimaryOnly		// Need this to force them to not use their medigun
+					Attributes AlwaysCrit
+					Attributes AlwaysFireWeapon			// Need this to force their AI to fire their non-default weapon
+				}
+				
+				// This section is so long that it's better practice to put these templates in the Templates section (line 15)
+				// so that this section can be kept condensed. Otherwise, you can see this wavespawn's code is long and a bit messy.
+			}
+		}
+		
+		// 40 pyros on expert AI after the crit iron bombers die
+		WaveSpawn
+		{
+			Name "wave2f"
+			WaitForAllDead "wave2b"
+			Where spawnbot
+			TotalCount 40
+			MaxActive 6
+			SpawnCount 2
+			WaitBeforeStarting 5
+			WaitBetweenSpawns 5
+			TotalCurrency 100
+			TFBot
+			{
+				Class Pyro
+				Skill Expert
+			}
+		}
+		
+		// End of wave
+	}
+	
+	// End of mission
+}
+
+// This demonstration pop file was made by Hydrogen (http://steamcommunity.com/profiles/76561198071195301)
+// as an example pop file for the Titanium Tank Tour event on Potato's MvM Servers.
