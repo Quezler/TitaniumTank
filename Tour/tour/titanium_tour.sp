@@ -214,7 +214,8 @@ public void OnClientPutInServer(int iClient)
 
 public void OnClientPostAdminCheck(int iClient)
 {
-	PrintToChat(iClient, "\x081BFFFFFF[TT] Follow your progress with !tt_tour or !tt_url");
+	// Requested by Octavia
+	PrintToChat(iClient, "\x081BFFFFFF[TT] Follow your progress with \x08FFFF00FF!tt_tour \x081BFFFFFFand \x08FFFF00FF!tt_mission \x081BFFFFFFand \x08FFFF00FF!tt_url\x081BFFFFFF. If a wave glitches out, use \x08FFFF00FF!vote_restart_wave\x081BFFFFFF. Enjoy the tour!");
 }
 
 
