@@ -1,0 +1,430 @@
+
+/**
+ * General
+ **/
+
+a, html, body, h1, h2, h3, h4, h5, p 
+{
+  color: white;
+  margin: 0;
+  font-family: Verdana;
+}
+
+
+
+body
+{
+	background-image: url('../img/mvm.jpg');
+	background-position: 0 90px;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+
+
+td
+{
+	color: white;
+	background-color:#4B4B4B;
+	padding: 10px;
+}
+
+
+
+/**
+ * Blue header
+ **/
+
+.tourheader
+{
+	text-shadow: 5px 3px #324a70;
+	background: #313131;
+	color: #346a82;
+	height: 82px;
+	border-radius: 5px;
+	border-color: #346a82;
+	border-style: solid;
+	border-width: 5px;
+}
+
+
+
+/**
+ * Header text
+ **/
+
+.tttpd
+{
+	top: 2%;
+	left: 50%;
+	transform:translateX(-50%);
+	position: absolute;
+	color: #367796;
+	font-size:2rem;
+}
+
+
+
+/**
+ * Steam group icon
+ **/
+
+.groupimg
+{
+	height: 64px;
+	width: 64px;
+	margin-left: 20px;
+	margin-top: 10px;
+}
+
+
+
+#group_icon
+{
+	left: 1%;
+}
+
+
+
+/**
+ * Medal icon
+ **/
+
+.icon64
+{
+	position: absolute;
+	height: 64px;
+	width: 64px;
+	display: inline-block;
+	margin-left: 20px;
+	margin-top: 10px;
+}
+
+
+
+#medal_icon
+{
+	right: 1%;
+}
+
+
+
+/**
+ * Author text
+ **/
+
+.authors
+{
+	font-size: 14px;
+	position:absolute;
+	top: 95%; left: 82%;
+	height: 30px;
+	width: 330px;
+}
+
+
+
+/**
+ * Front page stuff
+ */
+
+
+::placeholder 						/* Changes the text color inside the profile box. */
+{ /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #b0b0b0;
+    opacity: 1; /* Firefox */
+}
+
+
+
+.steamprofilebox 					/* Box to enter steam profile in. */
+{
+	background: #313131;
+	height: 50px;
+	width: 800px;
+	
+	font-size:20px;
+	text-align:center;
+	
+	border-radius: 5px;
+	border-color: #346a82;
+	border-style: solid;
+	border-width: 5px;
+	
+	color: #ffffff; /* #4993af; */
+	opacity: 0.85;
+}
+
+
+
+.submitbutton 						/* Submit button. */
+{
+	background: #30702e;
+	height: 60px;
+	
+	font-weight:bold;
+	font-size:20px;
+	
+	border-radius: 10px;
+	border-color: #2ca828;
+	border-style: solid;
+	border-width: 5px;
+	color: #ffffff;
+	opacity: 0.85;
+}
+
+
+
+.submitbutton:hover 	 				/* Submit button tweak when hovered. */
+{
+	background: #2ca828;
+	color: #ffffff;
+}
+
+
+
+.infolink							/* Bottom 2 links on front page **/
+{
+	background: #313131;
+	border-radius: 10px;
+	border-color: #346a82;
+	border-style: solid;
+	border-width: 5px;
+	font-size:20px;
+	position:absolute;
+	bottom: 2%;
+	height: 30px;
+	width: 330px;
+}
+
+
+
+#rightbutton
+{
+	right: 30%;
+}
+
+
+
+#leftbutton
+{
+	left: 30%;
+}
+
+
+
+/**
+ * Global stats page
+ **/
+
+/* Changes background of tooltip on the graphs */
+div.google-visualization-tooltip { background-color:#404040; }
+
+
+
+.global_center_object 				/* Return to main page link */
+{
+	height: 5%;
+	width: 10%;
+	position: absolute;
+	top: 110%; left: 52%;
+	background-color: #313131;
+	background: #313131;
+	transform: translate(-50%, -50%);
+	border-radius: 5px;
+	border-color: #346a82;
+	border-style: solid;
+	border-width: 5px;
+	opacity: 0.85;
+}
+
+
+
+.global_quad2						/* Wave credits graph by map & wave. (Has 6 colored lines.) */
+{
+	position: absolute;
+	top: 35%; left: 22%;
+	background-color: #313131;
+	background: #313131;
+	transform: translate(-50%, -50%);
+	border-radius: 5px;
+	border-color: #346a82;
+	border-style: solid;
+	border-width: 5px;
+	opacity: 0.85;
+}
+
+
+
+.global_quad1						/* Wave credits graph by number of players. */
+{
+	position: absolute;
+	top: 35%; left: 80%;
+	background-color: #313131;
+	background: #313131;
+	transform: translate(-50%, -50%);
+	border-radius: 5px;
+	border-color: #346a82;
+	border-style: solid;
+	border-width: 5px;
+	opacity: 0.85;
+}
+
+
+
+.global_quad3						/* Bar graph of mission participants & completists. */
+{
+	position: absolute;
+	top: 90%; left: 22%;
+	background-color: #313131;
+	background: #313131;
+	transform: translate(-50%, -50%);
+	border-radius: 5px;
+	border-color: #346a82;
+	border-style: solid;
+	border-width: 5px;
+	opacity: 0.85;
+}
+
+
+
+.global_quad4						/* Global statistics table. */
+{
+	position: absolute;
+	top: 90%; left: 80%;
+	background-color: #313131;
+	background: #313131;
+	transform: translate(-50%, -50%);
+	border-radius: 5px;
+	border-color: #346a82;
+	border-style: solid;
+	border-width: 5px;
+	opacity: 0.85;
+}
+
+
+
+/**
+ * Individual progress page
+ **/
+
+
+
+.individual_main_table 				/* Main tour progress table. */
+{
+	background-color: #313131;
+	background: #313131;
+	transform: translate(0%, 20%);
+	border-radius: 5px;
+	border-color: #346a82;
+	border-style: solid;
+	border-width: 5px;
+	margin: 0 auto;
+	opacity: 0.85;
+}
+
+
+
+.individual_most_recent_credits 		/* Most recently acquired wave credits table. */
+{
+	background-color: #313131;
+	background: #313131;
+	transform: translate(-75%, 75%);
+	border-radius: 5px;
+	border-color: #346a82;
+	border-style: solid;
+	border-width: 5px;
+	margin: 0 auto;
+	opacity: 0.85;
+}
+
+
+
+.individual_statistics 				/* Individual statistics table. */
+{
+	background-color: #313131;
+	background: #313131;
+	transform: translate(75%, -25%);
+	border-radius: 5px;
+	border-color: #346a82;
+	border-style: solid;
+	border-width: 5px;
+	margin: 0 auto;
+	opacity: 0.85;
+}
+
+
+
+.individual_bottom_object 			/* Return to main page link. */
+{
+	height: 5%;
+	width: 10%;
+	position: absolute;
+	top: 95%; left: 50%;
+	background-color: #313131;
+	background: #313131;
+	transform: translate(-50%, -50%);
+	border-radius: 5px;
+	border-color: #346a82;
+	border-style: solid;
+	border-width: 5px;
+	opacity: 0.85;
+}
+
+
+
+/**
+ * Servers page
+ **/
+
+.server_main_table 					/* Main server table. */
+{
+	position: absolute;
+	top: 12%; left: 13%;
+	width: 75%;
+	background-color: #313131;
+	background: #313131;
+	border-radius: 5px;
+	border-color: #346a82;
+	border-style: solid;
+	border-width: 5px;
+	opacity: 0.85;
+}
+
+
+
+.server_last_date 					/* Last queried date. */
+{
+	height: 4%;
+	width: 15%;
+	position: absolute;
+	top: 95%; left: 30%;
+	background-color: #313131;
+	background: #313131;
+	transform: translate(-50%, -50%);
+	border-radius: 5px;
+	border-color: #346a82;
+	border-style: solid;
+	border-width: 5px;
+	opacity: 0.85;
+}
+
+
+
+.server_exit_text 					/* Link to return to main page. */
+{
+	height: 3%;
+	width: 10%;
+	position: absolute;
+	top: 95%; left: 70%;
+	background-color: #313131;
+	background: #313131;
+	transform: translate(-50%, -50%);
+	border-radius: 5px;
+	border-color: #346a82;
+	border-style: solid;
+	border-width: 5px;
+	opacity: 0.85;
+}
+
+

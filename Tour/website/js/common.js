@@ -1,0 +1,55 @@
+
+/**
+ * =============================================================================
+ * Titanium Tank Tour Tour Progress Website
+ * Copyright (C) 2018 Potato's MvM Servers.  All rights reserved.
+ * =============================================================================
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, version 3.0, as published by the
+ * Free Software Foundation.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ **/
+
+
+// Stolen from https://stackoverflow.com/a/4033310
+// Executes a threaded HTTP GET request and passes the response data to a callback function.
+
+function http_get_async(theUrl, callback)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function()
+	{ 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous
+    xmlHttp.send(null);
+}
+
+
+
+
+
+// Stolen from https://coderwall.com/p/flonoa/simple-string-format-in-javascript
+// This gives javascript strings a format operator similar to Python's str.format
+
+String.prototype.format = function()
+{
+	a = this;
+	for (k in arguments)
+	{
+		a = a.replace("{" + k + "}", arguments[k]);
+	}
+	return a;
+}
+
+
+
+
