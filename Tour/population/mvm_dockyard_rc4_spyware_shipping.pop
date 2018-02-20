@@ -2,25 +2,34 @@
 //Made by Jakapoa http://steamcommunity.com/id/jaco909/ http://steamcommunity.com/profiles/76561198024345013
 //Advanced
 
-//Having a non-resetting bomb would be nice.
-
 #base robot_standard.pop
 #base robot_giant.pop
 #base robot_gatebot.pop
 #base robot_dockyard.pop
 
+//Fianl wave only loads on sigserver.
+
 //CASH COUNTER
-//START $800
-//DROP 	W1 [$600]	W2 [$600]	W3	[$500]	W4 [$600]	W5 [$600]	W6	[$500]
-//TOTAL	W1 [$1400]	W2 [$2000]	W3	[$2500]	W4 [$3100]	W5 [$3700]	W6	[$4200]
-//BONUS	W1 [$1500]	W2 [$2200]	W3	[$2800]	W4 [$3500]	W5 [$4200]	W6	[$4800]
+//START $900
+//DROP 	W1 [$600]	W2 [$600]	W3	[$600]	W4 [$600]	W5 [$600]	W6	[$500]	*W7	[$2000]
+//TOTAL	W1 [$1500]	W2 [$2100]	W3	[$2700]	W4 [$3300]	W5 [$3900]	W6	[$4400]	*W7	[$6400]
+//BONUS	W1 [$1600]	W2 [$2300]	W3	[$3000]	W4 [$3700]	W5 [$4400]	W6	[$5000]	*W7	[$7100]
 
 WaveSchedule													
 {
-	StartingCurrency 800
+	StartingCurrency 900
 	RespawnWaveTime	5
 	CanBotsAttackWhileInSpawnRoom no
 	Advanced 1
+	
+	ExtraSpawnPoint [$SIGSEGV]
+    {
+        Name "spawnbot_center"
+        TeamNum 3
+        X 	"184"
+        Y 	"-666"
+        Z  	"383"
+    }
 	
 	Templates
 	{
@@ -139,36 +148,6 @@ WaveSchedule
 				"hand scale" 0.01
 			}
 		}
-		T_TFBot_Pyro_Random_Long //Increadibly long ground flames that do little damage and pull players
-		{
-			Name "Suction Prototype Pyro"
-			Class Pyro
-			Scale 1.05
-			WeaponRestrictions PrimaryOnly
-			Attributes AlwaysFireWeapon
-			Item "The Person in the Iron Mask"
-			Item "The Gas Guzzler"
-			Item "TF_WEAPON_FLAMETHROWER"
-			ItemAttributes
-			{
-				ItemName "TF_WEAPON_FLAMETHROWER"
-				"flame_gravity" 1
-				"flame_drag" 0.1
-				"flame_up_speed" -350
-				"flame_speed" 3600
-				"flame_spread_degree" 1
-				"flame_lifetime" 0.25
-				"damage bonus"	0.001 //1 damage
-				"apply look velocity on damage" -150
-				"apply z velocity on damage" -150
-				"weapon burn time increased" 0.01
-				"weapon burn dmg increased" 0.001 //no afterburn damage
-			}
-			CharacterAttributes
-			{
-				"torso scale" 1.15
-			}
-		}
 		T_TFBot_Pyro_Random_Spread //Large cone of flames
 		{
 			Name "Wild Prototype Pyro"
@@ -272,29 +251,28 @@ WaveSchedule
 				ItemName "Iron Curtain"
 				"override projectile type" 6
 				"Projectile speed increased" 0.8
-				"fire rate bonus" 2.5
+				"fire rate bonus" 2.15
 				"crit vs burning players" 1
 				"weapon burn time increased" 2
 				"weapon burn dmg reduced" 0.5
 			}
 		}
-		T_TFBot_Heavyweapons_Tomislav //normal version of the dockyard bot
+		T_TFBot_Heavyweapons_Tomislav //Edited version of the dockyard bot
 		{
-			ClassIcon	heavy_giant_accurate
-			WeaponRestrictions	PrimaryOnly
-			Skill	Expert
-			Name	"Gear Gunner"
-			Class	HeavyWeapons
-			MaxVisionRange	1200
+			Name "Gear Gunner"
+			Class HeavyWeapons
+			ClassIcon heavy_giant_accurate
+			Skill Expert
+			WeaponRestrictions PrimaryOnly
+			MaxVisionRange 1200
+			Item "Tomislav"
+			Item "the team captain"
 			ItemAttributes
 			{
-				ItemName	tomislav
-				"fire rate bonus"	0.85
+				ItemName "Tomislav"
 				"weapon spread bonus"	0.5
 				"minigun spinup time decreased"	0.5
 			}
-			Item	"tomislav"
-			Item	"the team captain"
 		}
 		T_TFBot_Medic_Krit
 		{
@@ -1106,6 +1084,35 @@ WaveSchedule
 				"dmg from ranged reduced" 0.000000001 //if spawn protection is removed via gate capture, bot will take 0 damage from attacks
 			}
 		}
+		T_TFBot_Boss_Demo_Mortar_Active
+		{
+			Name "Dockyard Mortar Monstrosity"
+			Class Demoman
+			ClassIcon demo_bomber
+			Health 80000
+			Scale 14
+			Attributes AlwaysFireWeapon
+			Attributes UseBossHealthBar
+			Attributes HoldFireUntilFullReload
+			WeaponRestrictions PrimaryOnly
+			Skill Expert
+			Attributes MiniBoss
+			Tag bot_giant
+			ItemAttributes
+			{
+				ItemName "TF_WEAPON_GRENADELAUNCHER"
+				"grenade not explode on impact" 1
+				"grenade no spin" 1
+				"custom projectile model" "models/props_td/atom_bomb.mdl" //only pre-loaded prop available
+				"bombinomicon effect on death" 1
+				"fuse bonus" 1.7
+				"Projectile speed increased" 1.4
+				"use large smoke explosion" 1
+				"blast radius increased" 3
+				"faster reload rate" 1.3
+				"damage bonus" 9
+			}
+		}
 	}
 	
 	Mission	//SB 1-2
@@ -1221,6 +1228,10 @@ WaveSchedule
 //WAVE 1  /////////////////////////////////////////////////////////////////	
 	Wave
 	{
+		Explanation [$SIGSEGV]
+		{
+			Line "{238623}Sig Server identified. Loading Super Turbo mode..."
+		}
 		StartWaveOutput
 		{
 			Target wave_start_relay
@@ -1661,7 +1672,7 @@ WaveSchedule
 	{
 		StartWaveOutput
 		{
-			Target wave_start_relay
+			Target wave_start_relay_notimer
 			Action Trigger
 		}
 		DoneOutput
@@ -1916,6 +1927,11 @@ WaveSchedule
 			MaxActive 2
 			SpawnCount 2
 			TotalCurrency 100
+			LastSpawnOutput	
+			{
+				Target reset_wave_relay
+				Action Trigger
+			}
 			
 			Squad
 			{
@@ -1940,8 +1956,8 @@ WaveSchedule
 			WaitBeforeStarting 1
 			WaitBetweenSpawns 5
 			TotalCount 12
-			MaxActive 3
-			SpawnCount 3
+			MaxActive 2
+			SpawnCount 2
 			TotalCurrency 50
 			Support 1
 			StartWaveOutput
@@ -1969,8 +1985,8 @@ WaveSchedule
 			WaitBeforeStarting 1
 			WaitBetweenSpawns 4
 			TotalCount 12
-			MaxActive 3
-			SpawnCount 3
+			MaxActive 2
+			SpawnCount 2
 			TotalCurrency 50
 			Support 1
 			
@@ -2143,6 +2159,11 @@ WaveSchedule
 			MaxActive 6
 			SpawnCount 3
 			TotalCurrency 100
+			LastSpawnOutput
+			{
+				Target gate1_alarm_timer
+				Action Disable
+			}
 			
 			Squad
 			{
@@ -2375,7 +2396,7 @@ WaveSchedule
 			TotalCount 9
 			MaxActive 6
 			SpawnCount 3
-			TotalCurrency 50
+			TotalCurrency 100
 			
 			Squad
 			{
@@ -2442,6 +2463,11 @@ WaveSchedule
 			MaxActive 4
 			SpawnCount 2
 			TotalCurrency 100
+			LastSpawnOutput
+			{
+				Target gate1_alarm_timer
+				Action Disable
+			}
 			
 			Squad
 			{
@@ -2913,7 +2939,7 @@ WaveSchedule
 			TotalCount 6
 			MaxActive 3
 			SpawnCount 3
-			TotalCurrency 0
+			TotalCurrency 50
 			Support 1
 			
 			RandomChoice
@@ -2927,6 +2953,89 @@ WaveSchedule
 					Template T_TFBot_Demo_Burst
 					ClassIcon demo_burst
 				}
+			}
+		}
+	}
+//WAVE 7  /////////////////////////////////////////////////////////////////	
+	Wave [$SIGSEGV]
+	{
+		Explanation
+		{
+			Line "{238623}Supports are giant!"
+		}
+		StartWaveOutput
+		{
+			Target wave_start_relay_notimer
+			Action Trigger
+		}
+		DoneOutput
+		{
+			Target wave_finished_relay
+			Action Trigger
+		}
+		WaveSpawn
+		{
+			Name "W7_S1"
+			Where spawnbot_scattered_0
+			TotalCount 100
+			MaxActive 3
+			SpawnCount 1
+			WaitBeforeStarting 6
+			WaitBetweenSpawns 1
+			TotalCurrency 1000
+			StartWaveWarningSound "vo\mvm\mght\demoman_mvm_m_specialcompleted05.mp3"
+			Support 1
+			
+			RandomChoice
+			{
+				TFBot
+				{
+					Template T_TFBot_Giant_Pyro_Fury
+					Attributes AlwaysCrit
+				}
+				TFBot
+				{
+					Template T_TFBot_Giant_Soldier_Extended_Concheror
+					Attributes AlwaysCrit
+				}
+				TFBot
+				{
+					Template T_TFBot_Giant_Demo_Burst
+					Attributes AlwaysCrit
+				}
+			}
+		}
+		WaveSpawn
+		{
+			Name "W7_S2"
+			Where spawnbot_scattered_0
+			TotalCount 100
+			MaxActive 1
+			SpawnCount 1
+			WaitBeforeStarting 7
+			WaitBetweenSpawns 20
+			TotalCurrency 1000
+			FirstSpawnWarningSound "misc\grenade_jump_fall_01.wav"
+			Support 1
+			
+			TFBot
+			{
+				Template T_TFBot_Giant_Scout_Jumping_Sandman
+			}
+		}
+		WaveSpawn
+		{
+			Name "W7_Boss"
+			Where spawnbot_center
+			TotalCount 1
+			MaxActive 1
+			SpawnCount 1
+			WaitBeforeStarting 9
+			FirstSpawnWarningSound "misc\doomsday_missile_explosion.wav"
+			
+			TFBot
+			{
+				Template T_TFBot_Boss_Demo_Mortar_Active
 			}
 		}
 	}

@@ -609,7 +609,7 @@ WaveSchedule
 			TotalCount 2
 			MaxActive 2
 			SpawnCount 1
-			WaitBeforeStarting 10	
+			WaitBeforeStarting 15	
 			WaitBetweenSpawns 20			
 			TotalCurrency 120
 			
@@ -624,8 +624,8 @@ WaveSchedule
 			Where spawnbot
 			WaitForAllDead "wave2_heavies"
 			TotalCount 36
-			MaxActive 6				
-			SpawnCount 6
+			MaxActive 9		
+			SpawnCount 3
 			WaitBeforeStarting 2	
 			WaitBetweenSpawns 6			
 			TotalCurrency 230

@@ -387,8 +387,8 @@ WaveSchedule
 			Name	wave1c
 			WaitForAllSpawned	wave1b
 			TotalCurrency	150
-			TotalCount	20
-			MaxActive	10
+			TotalCount	16
+			MaxActive	8
 			SpawnCount	2
 			WaitBeforeStarting	34
 			WaitBetweenSpawns	8
@@ -1125,7 +1125,7 @@ WaveSchedule
 			TotalCount	1
 			MaxActive	1
 			SpawnCount	1
-			WaitBeforeStarting	25
+			WaitBeforeStarting	28
 
 				Tank
 				{
@@ -1153,13 +1153,15 @@ WaveSchedule
 			Name	wave3c1
 			WaitForAllSpawned	wave3b
 			TotalCurrency	75
-			TotalCount	12
-			MaxActive	12
-			SpawnCount	12
-			WaitBeforeStarting	27
-			WaitBetweenSpawns	0.5
+			TotalCount	10
+			MaxActive	10
+			SpawnCount	5
+			WaitBeforeStarting	30
+			WaitBetweenSpawns	8
 			Where	spawnbot_high
 
+			RandomChoice
+			{
 				TFBot
 				{
 					ClassIcon	Heavy_heater
@@ -1171,6 +1173,31 @@ WaveSchedule
 							
 					Item	"The Huo Long Heatmaker"
 				}
+				
+				TFBot
+				{
+					ClassIcon	Heavy_heater
+					Health	300
+					Name	"Heater Heavy"
+					Class	HeavyWeapons
+					Skill	Easy
+					WeaponRestrictions	PrimaryOnly
+							
+					Item	"The Huo Long Heatmaker"
+				}
+				
+				TFBot
+				{
+					ClassIcon	Heavy_heater
+					Health	300
+					Name	"Heater Heavy"
+					Class	HeavyWeapons
+					Skill	Easy
+					WeaponRestrictions	PrimaryOnly
+							
+					Item	"The Huo Long Heatmaker"
+				}
+			}
 		}
 		
 		WaveSpawn
@@ -1178,17 +1205,33 @@ WaveSchedule
 			Name	wave3c2
 			WaitForAllSpawned	wave3c1
 			TotalCurrency	75
-			TotalCount	12
-			MaxActive	12
-			SpawnCount	12
+			TotalCount	10
+			MaxActive	10
+			SpawnCount	5
 			WaitBeforeStarting	13
+			WaitBetweenSpawns	8
 			Where	spawnbot_high
 
+			RandomChoice
+			{
 				TFBot
 				{
 					Class	HeavyWeapons
 					Skill	Hard
 				}
+				
+				TFBot
+				{
+					Class	HeavyWeapons
+					Skill	Easy
+				}
+				
+				TFBot
+				{
+					Class	HeavyWeapons
+					Skill	Easy
+				}
+			}
 		}
 		
 		WaveSpawn
@@ -1196,12 +1239,15 @@ WaveSchedule
 			Name	wave3c3
 			WaitForAllSpawned	wave3c2
 			TotalCurrency	75
-			TotalCount	12
-			MaxActive	12
-			SpawnCount	12
+			TotalCount	10
+			MaxActive	10
+			SpawnCount	5
 			WaitBeforeStarting	13
+			WaitBetweenSpawns	8
 			Where	spawnbot_high
 
+			RandomChoice
+			{
 				TFBot
 				{
 					ClassIcon	Heavy_Deflector_healonkill
@@ -1220,6 +1266,45 @@ WaveSchedule
 					Item	"The U-Clank-A"
 					Item	"Deflector"
 				}
+				
+				TFBot
+				{
+					ClassIcon	Heavy_Deflector_healonkill
+					Health	300
+					Name	"Heal-on-Kill Deflector Heavy"
+					Class	HeavyWeapons
+					Skill	Easy
+					
+					ItemAttributes
+					{
+						ItemName	"Deflector"
+						"heal on kill"	300
+						"attack projectiles"	2
+					}
+					
+					Item	"The U-Clank-A"
+					Item	"Deflector"
+				}
+				
+				TFBot
+				{
+					ClassIcon	Heavy_Deflector_healonkill
+					Health	300
+					Name	"Heal-on-Kill Deflector Heavy"
+					Class	HeavyWeapons
+					Skill	Easy
+					
+					ItemAttributes
+					{
+						ItemName	"Deflector"
+						"heal on kill"	300
+						"attack projectiles"	2
+					}
+					
+					Item	"The U-Clank-A"
+					Item	"Deflector"
+				}
+			}
 		}
 		
 		WaveSpawn
@@ -1775,7 +1860,7 @@ WaveSchedule
 					ItemAttributes
 					{
 						ItemName	Deflector
-						"damage bonus"	1.5
+						"damage bonus"	1.2
 						"attack projectiles"	2
 						"heal on kill"	5000
 					}
@@ -1799,7 +1884,7 @@ WaveSchedule
 			WaitForAllSpawned	wave4c
 			TotalCurrency	50
 			TotalCount	10
-			MaxActive	7
+			MaxActive	6
 			SpawnCount	1
 			WaitBeforeStarting	15
 			WaitBetweenSpawns	2
@@ -1832,10 +1917,10 @@ WaveSchedule
 			WaitForAllSpawned	wave4c
 			TotalCurrency	50
 			TotalCount	10
-			MaxActive	4
+			MaxActive	3
 			SpawnCount	1
 			WaitBeforeStarting	5
-			WaitBetweenSpawns	4
+			WaitBetweenSpawns	8
 			Support	1
 			Where	spawnbot_low
 
@@ -2133,7 +2218,7 @@ WaveSchedule
 					ItemAttributes
 					{
 						ItemName	"the quick-fix"
-						"ubercharge rate bonus"	9.5
+						"ubercharge rate bonus"	5.0
 						"uber duration bonus"	-5
 					}
 					
@@ -2148,7 +2233,6 @@ WaveSchedule
 					
 					Item	"The Quick-Fix"
 					Item	"The Gauzed Gaze"
-					Item	"Das Metalmeatencasen"
 				}
 			}
 		}
@@ -2196,7 +2280,7 @@ WaveSchedule
 		WaveSpawn
 		{
 			Name	wave6boss
-			TotalCurrency	100
+			TotalCurrency	150
 			TotalCount	1
 			MaxActive	1
 			SpawnCount	1
@@ -2247,9 +2331,9 @@ WaveSchedule
 		{
 			Name	wave6boss
 			TotalCurrency	100
-			TotalCount	20
-			MaxActive	10
-			SpawnCount	5
+			TotalCount	16
+			MaxActive	8
+			SpawnCount	4
 			WaitBeforeStarting	10
 			WaitBetweenSpawns	10
 			Where	spawnbot
@@ -2277,7 +2361,7 @@ WaveSchedule
 					Health	300
 					Name	"Heater Heavy"
 					Class	HeavyWeapons
-					Skill	Hard
+					Skill	Easy
 					WeaponRestrictions	PrimaryOnly
 							
 					Item	"The Huo Long Heatmaker"
@@ -2288,7 +2372,7 @@ WaveSchedule
 		{
 			Name	wave6b
 			WaitForAllDead	wave6boss
-			TotalCurrency	200
+			TotalCurrency	250
 			TotalCount	32
 			MaxActive	16
 			SpawnCount	2
@@ -2321,42 +2405,13 @@ WaveSchedule
 		WaveSpawn
 		{
 			Name	wave6s
-			WaitForAllDead	wave6b
-			TotalCurrency	100
-			TotalCount	50
-			MaxActive	5
-			SpawnCount	1
-			WaitBeforeStarting	0
-			WaitBetweenSpawns	4
-			Support	1
-			Where	spawnbot_high
-			
-			RandomChoice
-			{
-				TFBot
-				{
-					Class	HeavyWeapons
-					Skill	Hard
-				}
-				
-				TFBot
-				{
-					Class	Demoman
-					Skill	Easy
-				}
-			}
-		}
-		
-		WaveSpawn
-		{
-			Name	wave6s
 			WaitForAllDead	wave6boss
 			TotalCurrency	100
 			TotalCount	50
 			MaxActive	4
 			SpawnCount	1
 			WaitBeforeStarting	0
-			WaitBetweenSpawns	7
+			WaitBetweenSpawns	12
 			Support	1
 			Where	spawnbot_low
 				
@@ -2439,7 +2494,6 @@ WaveSchedule
 				TFBot
 				{
 					Template	T_TFBot_Giant_Soldier_Spammer_Reload
-					Attributes	"AlwaysCrit"
 				}
 		}
 		
@@ -2458,7 +2512,6 @@ WaveSchedule
 				TFBot
 				{
 					Template	T_TFBot_Giant_Soldier_Spammer_Reload
-					Attributes	"AlwaysCrit"
 				}
 		}
 		

@@ -1,6 +1,6 @@
 WaveSchedule
 {
-	StartingCurrency		600
+	StartingCurrency		700
 	RespawnWaveTime 		5
 	CanBotsAttackWhileInSpawnRoom no
 	
@@ -174,6 +174,7 @@ WaveSchedule
 		{
 			Name "Boonie Sniper"
 			Class Sniper
+			ClassIcon sniper_sydneysleeper
 			Skill Expert
 			MaxVisionRange 4000
 			Item "The Bushman's Boonie"
@@ -295,9 +296,9 @@ WaveSchedule
 					BehaviorModifiers push			// having these will cause bots to run towards gates
 					Attributes IgnoreFlag 			// having these will cause bots to run towards gates
 
-					Attributes AlwaysCrit
+					//Attributes AlwaysCrit
 					Skill Easy
-					Item "Employee of the Mmmph"
+					Item "MvM GateBot Light Pyro"
 					Item "The Frymaster"
 					Item "The Flare Gun"
 					WeaponRestrictions PrimaryOnly
@@ -305,17 +306,18 @@ WaveSchedule
 				}
 				RevertGateBotsBehavior
 				{
-					Attributes AlwaysCrit
+					//Attributes AlwaysCrit
 					Skill Easy
 					BehaviorModifiers Mobber
-					Item "Employee of the Mmmph"
-					Item "The Frymaster"
-					Item "The Flare Gun"
-					ItemAttributes
+					Item "MvM GateBot Light Pyro"
+					ItemAttributes               // turn off light hat
 					{
-						ItemName "Employee of the Mmmph"
+						ItemName "MvM GateBot Light Pyro"
+						"item style override" 1
 						"cannot pick up intelligence" 1
 					}
+					Item "The Frymaster"
+					Item "The Flare Gun"
 					WeaponRestrictions PrimaryOnly
 					Attributes AlwaysFireWeapon
 				}
@@ -335,13 +337,7 @@ WaveSchedule
 					BehaviorModifiers push			// having these will cause bots to run towards gates
 					Attributes IgnoreFlag 			// having these will cause bots to run towards gates
 
-					Item "Employee of the Mmmph"
-					ItemAttributes
-					{
-						ItemName "Employee of the Mmmph"
-						"set item tint rgb" 15185211
-						"set item tint rgb 2" 15185211
-					}
+					Item "MvM GateBot Light Pyro"
 					Item "The Frymaster"
 					Item "The Flare Gun"
 					Skill Expert
@@ -350,14 +346,15 @@ WaveSchedule
 				RevertGateBotsBehavior
 				{
 					BehaviorModifiers Mobber
-					Item "Employee of the Mmmph"
-					Item "The Frymaster"
-					Item "The Flare Gun"
-					ItemAttributes
+					Item "MvM GateBot Light Pyro"
+					ItemAttributes               // turn off light hat
 					{
-						ItemName "Employee of the Mmmph"
+						ItemName "MvM GateBot Light Pyro"
+						"item style override" 1
 						"cannot pick up intelligence" 1
 					}
+					Item "The Frymaster"
+					Item "The Flare Gun"
 					Skill Expert
 					WeaponRestrictions SecondaryOnly
 				}
@@ -434,13 +431,14 @@ WaveSchedule
 					BehaviorModifiers push		// having these will cause bots to run towards gates
 					Attributes IgnoreFlag		// having these will cause bots to run towards gates
 
-					Item "The Hot Dogger"
-					ItemAttributes
-					{
-						ItemName "The Hot Dogger"
-						"set item tint rgb" 15185211
-					}
-					//Item "MvM GateBot Light Demoman"
+					//Item "The Hot Dogger"
+					//ItemAttributes
+					//{
+					//	ItemName "The Hot Dogger"
+					//	"set item tint rgb" 15185211
+					//	"set item tint rgb 2" 15185211
+					//}
+					Item "MvM GateBot Light Demoman"
 					
 					Skill Expert
 					Attributes MiniBoss
@@ -458,15 +456,21 @@ WaveSchedule
 				{
 					BehaviorModifiers Mobber
 					
-					Item "The Hot Dogger"
-					ItemAttributes
-					{
-						ItemName "The Hot Dogger"
-						"set item tint rgb" 15185211
-						"set item tint rgb 2" 15185211
-						"cannot pick up intelligence" 1
-					}
+					//Item "The Hot Dogger"
+					//ItemAttributes
+					//{
+					//	ItemName "The Hot Dogger"
+					//	"set item tint rgb" 15185211
+					//	"set item tint rgb 2" 15185211
+					//}
 					//Item "MvM GateBot Light Demoman"
+					Item "MvM GateBot Light Demoman"
+					ItemAttributes               // turn off light hat
+					{
+						ItemName "MvM GateBot Light Demoman"
+						"cannot pick up intelligence" 1
+						"item style override" 1
+					}
 
 					Skill Expert
 					Attributes MiniBoss
@@ -507,7 +511,7 @@ WaveSchedule
 					Attributes IgnoreFlag 			// having these will cause bots to run towards gates
 
 					Item "The Concheror"
-					//Item "The Crit Cloak"
+					Item "MvM GateBot Light Soldier"
 					Skill Hard
 					Attributes SpawnWithFullCharge
 					CharacterAttributes
@@ -518,14 +522,19 @@ WaveSchedule
 				RevertGateBotsBehavior
 				{
 					Item "The Concheror"
-					//Item "The Crit Cloak"
+					Item "MvM GateBot Light Soldier"
+					ItemAttributes               // turn off light hat
+					{
+						ItemName "MvM GateBot Light Soldier"
+						"item style override" 1
+						"cannot pick up intelligence" 1
+					}
 					Skill Hard
 					BehaviorModifiers Mobber
 					Attributes SpawnWithFullCharge
 					CharacterAttributes
 					{
 						"increase buff duration"	9.0
-						"cannot pick up intelligence" 1
 					}
 				}
 			}
@@ -549,6 +558,7 @@ WaveSchedule
 					Item "The Battalion's Backup"
 					Item "The Half-Zatoichi"
 					Item "The Valley Forge"
+					Item "MvM GateBot Light Soldier"
 					Skill Expert
 					Attributes SpawnWithFullCharge
 					Tag bot_giant
@@ -564,6 +574,13 @@ WaveSchedule
 					Item "The Battalion's Backup"
 					Item "The Half-Zatoichi"
 					Item "The Valley Forge"
+					Item "MvM GateBot Light Soldier"
+					ItemAttributes               // turn off light hat
+					{
+						ItemName "MvM GateBot Light Soldier"
+						"item style override" 1
+						"cannot pick up intelligence" 1
+					}
 					Skill Expert
 					BehaviorModifiers Mobber
 					WeaponRestrictions MeleeOnly
@@ -573,7 +590,6 @@ WaveSchedule
 					CharacterAttributes
 					{
 						"increase buff duration"	9.0
-						"cannot pick up intelligence" 1
 					}
 				}
 			}
@@ -611,6 +627,7 @@ WaveSchedule
 					BehaviorModifiers push		// having these will cause bots to run towards gates
 					Attributes IgnoreFlag		// having these will cause bots to run towards gates
 
+					Item "MvM GateBot Light Heavy"
 					Item "Pugilist's Protector"
 					Item "Large Luchadore"
 					Item "Deflector"
@@ -647,6 +664,12 @@ WaveSchedule
 					}
 					Item "Large Luchadore"
 					Item "Deflector"
+					Item "MvM GateBot Light Heavy"
+					ItemAttributes               // turn off light hat
+					{
+						ItemName "MvM GateBot Light Heavy"
+						"item style override" 1
+					}
 
 					Skill Expert
 					WeaponRestrictions PrimaryOnly
@@ -730,7 +753,7 @@ WaveSchedule
 
 					Tag bot_giant
 					Skill Expert
-					Item "Batter's Helmet"
+					Item "MvM GateBot Light Scout"
 					Item "The Track Terrorizer"
 					Item "The Sandman"
 					WeaponRestrictions MeleeOnly
@@ -754,9 +777,15 @@ WaveSchedule
 					Tag bot_giant
 					BehaviorModifiers Mobber
 					Skill Expert
-					Item "Batter's Helmet"
 					Item "The Track Terrorizer"
 					Item "The Sandman"
+					Item "MvM GateBot Light Scout"
+					ItemAttributes               // turn off light hat
+					{
+						ItemName "MvM GateBot Light Scout"
+						"item style override" 1
+						"cannot pick up intelligence" 1
+					}
 					WeaponRestrictions MeleeOnly
 					Attributes MiniBoss
 					//Attributes AlwaysCrit
@@ -764,11 +793,6 @@ WaveSchedule
 					{
 						ItemName "The Sandman"
 						"effect bar recharge rate increased" 0.05
-					}
-					ItemAttributes
-					{
-						ItemName "Batter's Helmet"
-						"cannot pick up intelligence" 1
 					}
 					CharacterAttributes
 					{
@@ -797,6 +821,7 @@ WaveSchedule
 			{
 				ItemName "The Direct Hit"
 				"clip size upgrade atomic" 8
+				"damage bonus" 1
 				"faster reload rate" .66
 				"fire rate bonus" .2
 			}
@@ -848,8 +873,8 @@ WaveSchedule
 					Tag nav_prefer_gate1_flank 		// having these will cause bots to run towards gates
 					Tag bot_gatebot 				// having these will cause bots to run towards gates
 
-					Item "MvM GateBot Light Demoman"
 					Item "Batter's Helmet"
+					Item "MvM GateBot Light Demoman"
 					Item "The Loch-n-Load"
 					ItemAttributes
 					{
@@ -863,6 +888,12 @@ WaveSchedule
 				{
 					BehaviorModifiers Mobber
 					Item "MvM GateBot Light Demoman"
+					ItemAttributes               // turn off light hat
+					{
+						ItemName "MvM GateBot Light Demoman"
+						"item style override" 1
+						"cannot pick up intelligence" 1
+					}
 					Item "Batter's Helmet"
 					Item "The Loch-n-Load"
 					ItemAttributes
@@ -870,12 +901,6 @@ WaveSchedule
 						ItemName "The Loch-n-Load"
 						"projectile speed increased" 2
 						"sticky air burst mode" 0
-					}
-					ItemAttributes               // turn off light hat
-					{
-						ItemName "MvM GateBot Light Demoman"
-						"item style override" 1
-						"cannot pick up intelligence" 1
 					}
 					Skill Normal
 				}
@@ -913,8 +938,14 @@ WaveSchedule
 					Tag bot_gatebot 				// having these will cause bots to run towards gates
 
 					Skill Normal
-					Item "MvM GateBot Light Scout"
 					Item "Bonk Helm"
+					ItemAttributes
+					{
+						ItemName "Bonk Helm"
+						"set item tint rgb" 15185211
+						"set item tint rgb 2" 15185211
+					}
+					Item "MvM GateBot Light Scout"
 					Item "The Soda Popper"
 					Item "Bonk! Atomic Punch"
 					ItemAttributes
@@ -926,6 +957,7 @@ WaveSchedule
 				RevertGateBotsBehavior
 				{
 					BehaviorModifiers Mobber
+					Skill Normal
 					Item "MvM GateBot Light Scout"
 					ItemAttributes               // turn off light hat
 					{
@@ -933,8 +965,6 @@ WaveSchedule
 						"item style override" 1
 						"cannot pick up intelligence" 1
 					}
-					Skill Normal
-					Item "Bonk Helm"
 					Item "The Soda Popper"
 					Item "Bonk! Atomic Punch"
 					ItemAttributes
@@ -995,6 +1025,7 @@ WaveSchedule
 		W4_Demo_Giant
 		{
 			Template W4_Demo
+			Name "Giant Bomb Summoner Demo"
 			ClassIcon demo_scatter_giant
 			Attributes MiniBoss
 			Health 3300
@@ -1094,6 +1125,7 @@ WaveSchedule
 				"heal rate bonus" 200
 				"generate rage on heal" 1
 				"increase buff duration" 2
+				"ubercharge rate bonus" .01
 			}
 			CharacterAttributes
 			{
@@ -1131,7 +1163,7 @@ WaveSchedule
 						ItemName "TF_WEAPON_SHOTGUN_HWG"
 						"override projectile type" 2
 						"damage bonus" 10
-						"Projectile speed increased" 1.5
+						//"Projectile speed increased" 1.5
 						"faster reload rate" 0.1
 					}
 					CharacterAttributes
@@ -1183,7 +1215,7 @@ WaveSchedule
 			Class Pyro
 			ClassIcon pyro_flareheal_giant
 			Skill Expert
-			Health 22000
+			Health 15000
 			WeaponRestrictions SecondaryOnly
 			Attributes MiniBoss
 			Attributes UseBossHealthBar
@@ -1197,7 +1229,7 @@ WaveSchedule
 				ItemName "The Flare Gun"
 				"damage bonus" 1.5
 				"heal on hit for rapidfire" 200
-				"fire rate bonus" .25
+				"fire rate bonus" .5
 			}
 			CharacterAttributes
 			{
@@ -1222,7 +1254,7 @@ WaveSchedule
 			ItemAttributes
 			{
 				ItemName "The Kritzkrieg"
-				"heal rate bonus" 100
+				//"heal rate bonus" 100
 				"uber duration bonus" 100
 				"ubercharge rate bonus" 100
 			}
@@ -1247,6 +1279,7 @@ WaveSchedule
 					Tag bot_gatebot 				// having these will cause bots to run towards gates
 
 					Item "Point and Shoot"
+					Item "MvM GateBot Light Soldier"
 					Item "Rocket Jumper"
 					ItemAttributes
 					{
@@ -1254,7 +1287,6 @@ WaveSchedule
 						"damage penalty" .75
 						"Projectile speed increased" 1.2
 					}
-					//Item "MvM GateBot Light Soldier"
 					Skill Expert
 				}
 				RevertGateBotsBehavior
@@ -1269,13 +1301,13 @@ WaveSchedule
 						"Projectile speed increased" 1.2
 						"cannot pick up intelligence" 1
 					}
-					//Item "MvM GateBot Light Soldier"
-					//ItemAttributes               // turn off light hat
-					//{
-					//	ItemName "MvM GateBot Light Soldier"
-					//	"item style override" 1
-					//	"cannot pick up intelligence" 1
-					//}
+					Item "MvM GateBot Light Soldier"
+					ItemAttributes               // turn off light hat
+					{
+						ItemName "MvM GateBot Light Soldier"
+						"item style override" 1
+						"cannot pick up intelligence" 1
+					}
 					Skill Expert
 				}
 			}
@@ -1346,6 +1378,7 @@ WaveSchedule
 
 					Skill Expert
 					Item "Ol' Snaggletooth"
+					Item "MvM GateBot Light Sniper"
 					Item "Darwin's Danger Shield"
 					Item "The Huntsman"
 					ItemAttributes
@@ -1360,10 +1393,11 @@ WaveSchedule
 					
 					Skill Expert
 					Item "Ol' Snaggletooth"
-					ItemAttributes
+					Item "MvM GateBot Light Sniper"
+					ItemAttributes               // turn off light hat
 					{
-						ItemName "Ol' Snaggletooth"
-						"cannot pick up intelligence" 1
+						ItemName "MvM GateBot Light Sniper"
+						"item style override" 1
 					}
 					Item "Darwin's Danger Shield"
 					Item "The Huntsman"
@@ -1404,6 +1438,7 @@ WaveSchedule
 			{
 				ItemName "The Eyelander"
 				"loot rarity" 1
+				"item style override" 1
 				"is australium item" 1
 				"melee range multiplier" 1.2
 			}
@@ -1556,7 +1591,6 @@ WaveSchedule
 			{
 				ItemName "Warrior's Spirit"
 				"dmg taken increased" 1
-				"damage bonus" 1.66
 			}
 		}
 		W5_Scout_Capper
@@ -1579,7 +1613,7 @@ WaveSchedule
 						ItemName "The C.A.P.P.E.R"
 						"clip size bonus" 2
 					}
-					Item "Captain Space Mann"
+					//Item "Captain Space Mann"
 					Attributes AlwaysCrit
 					WeaponRestrictions SecondaryOnly
 					Skill Hard
@@ -1602,7 +1636,7 @@ WaveSchedule
 						ItemName "The C.A.P.P.E.R"
 						"clip size bonus" 2
 					}
-					Item "Captain Space Mann"
+					//Item "Captain Space Mann"
 					WeaponRestrictions SecondaryOnly
 					Skill Hard
 					MaxVisionRange 1300
@@ -1670,6 +1704,7 @@ WaveSchedule
 
 					Attributes AlwaysFireWeapon
 					Item "Pyro the Flamedeer"
+					Item "MvM GateBot Light Pyro"
 					Item "Festive Backburner 2014"
 					Skill Hard
 					Tag bot_giant
@@ -1679,12 +1714,14 @@ WaveSchedule
 					BehaviorModifiers Mobber
 					Attributes AlwaysFireWeapon
 					Item "Pyro the Flamedeer"
-					Item "Festive Backburner 2014"
-					ItemAttributes
+					Item "MvM GateBot Light Pyro"
+					ItemAttributes               // turn off light hat
 					{
-						ItemName "Pyro the Flamedeer"
+						ItemName "MvM GateBot Light Pyro"
+						"item style override" 1
 						"cannot pick up intelligence" 1
 					}
+					Item "Festive Backburner 2014"
 					Skill Hard
 					Tag bot_giant
 				}
@@ -1692,7 +1729,7 @@ WaveSchedule
 		}
 		W6_Scout_Burst
 		{
-			Name "Impatient Scout"
+			Name "Impatient Holiday Scout"
 			Class Scout
 			Item "Runner's Warm-Up"
 			Item "Festive Scattergun 2011"
@@ -1701,6 +1738,7 @@ WaveSchedule
 			ItemAttributes
 			{
 				ItemName "Festive Scattergun 2011"
+				"damage penalty" 0.75
 				"fire rate bonus" .5
 				"faster reload rate" .66
 			}
@@ -1778,12 +1816,12 @@ WaveSchedule
 					Attributes MiniBoss
 					//Attributes AlwaysCrit
 					Attributes HoldFireUntilFullReload
-					Item "A Rather Festive Tree"
+					//Item "A Rather Festive Tree"
 					Item "Festive Grenade Launcher"
 					ItemAttributes
 					{
 						ItemName "Festive Grenade Launcher"
-						"damage bonus" 1.5
+						//"damage bonus" 1.5
 						"clip size upgrade atomic" 8
 						"fire rate bonus" .66
 						"faster reload rate" .1
@@ -1813,12 +1851,12 @@ WaveSchedule
 					Attributes MiniBoss
 					//Attributes AlwaysCrit
 					Attributes HoldFireUntilFullReload
-					Item "A Rather Festive Tree"
+					//Item "A Rather Festive Tree"
 					Item "Festive Grenade Launcher"
 					ItemAttributes
 					{
 						ItemName "Festive Grenade Launcher"
-						"damage bonus" 1.5
+						//"damage bonus" 1.5
 						"clip size upgrade atomic" 8
 						"fire rate bonus" .33
 						"faster reload rate" .1
@@ -1898,7 +1936,7 @@ WaveSchedule
 			ItemAttributes
 			{
 				ItemName "Festive Minigun 2011"
-				"damage bonus" 1.5
+				//"damage bonus" 1.5
 				"attack projectiles" 1
 			}
 		}
@@ -1918,7 +1956,7 @@ WaveSchedule
 					Attributes IgnoreFlag		// having these will cause bots to run towards gates
 
 					Item "MvM GateBot Light Heavy"
-					Item "The Holiday Headcase"
+					//Item "The Holiday Headcase"
 					Item "The Holiday Punch"
 					Skill Expert
 					WeaponRestrictions MeleeOnly
@@ -1939,7 +1977,7 @@ WaveSchedule
 						"item style override" 1
 						"cannot pick up intelligence" 1
 					}
-					Item "The Holiday Headcase"
+					//Item "The Holiday Headcase"
 					Item "The Holiday Punch"
 					Skill Expert
 					WeaponRestrictions MeleeOnly
@@ -1972,7 +2010,7 @@ WaveSchedule
 		{
 			Name "Winter Soldier"
 			Class Soldier
-			ClassIcon soldier_blackbox_backup
+			ClassIcon soldier_buff
 			Scale 1.5
 			Health 900
 			
@@ -1987,10 +2025,10 @@ WaveSchedule
 
 					Attributes SpawnWithFullCharge
 					Attributes HoldFireUntilFullReload
-					Item "The Battalion's Backup"
+					Item "Festive Buff Banner"
 					ItemAttributes
 					{
-						ItemName "The Battalion's Backup"
+						ItemName "Festive Buff Banner"
 						"increase buff duration"	9
 					}
 					Item "MvM GateBot Light Soldier"
@@ -2004,7 +2042,7 @@ WaveSchedule
 						"fire rate bonus" .33
 						"faster reload rate" .5
 					}
-					Item "Tough Stuff Muffs"
+					//Item "Tough Stuff Muffs"
 				}
 				RevertGateBotsBehavior
 				{
@@ -2019,10 +2057,10 @@ WaveSchedule
 					}
 					Attributes SpawnWithFullCharge
 					Attributes HoldFireUntilFullReload
-					Item "The Battalion's Backup"
+					Item "Festive Buff Banner"
 					ItemAttributes
 					{
-						ItemName "The Battalion's Backup"
+						ItemName "Festive Buff Banner"
 						"increase buff duration"	9
 					}
 					Skill Expert
@@ -2034,12 +2072,12 @@ WaveSchedule
 						"fire rate bonus" .33
 						"faster reload rate" .5
 					}
-					Item "Tough Stuff Muffs"
+					//Item "Tough Stuff Muffs"
 				}
 			}
 		}
 	}
-	Wave //Wave 1 Money: 800
+	Wave //Wave 1 Money: 800 + 100(Buff)
 	{
 		StartWaveOutput
 		{
@@ -2073,7 +2111,7 @@ WaveSchedule
 				TFBot
 				{
 					Template W1_Pyro_Little
-					Attributes AlwaysCrit //redundant, putting it here for hud
+					//Attributes AlwaysCrit //redundant, putting it here for hud
 				}
 				TFBot
 				{
@@ -2087,7 +2125,7 @@ WaveSchedule
 		}
 		WaveSpawn
 		{
-			TotalCurrency 100
+			TotalCurrency 150
 			Where spawnbot_upper
 			Where spawnbot_garage
 			Where spawnbot_mensch
@@ -2113,7 +2151,7 @@ WaveSchedule
 			MaxActive 2
 			SpawnCount 1
 			WaitBeforeStarting 10
-			WaitBetweenSpawns 25
+			WaitBetweenSpawns 35
 			
 			TFBot
 			{
@@ -2155,7 +2193,7 @@ WaveSchedule
 			TFBot
 			{
 				Template W1_Pyro_Little
-				Attributes AlwaysCrit //redundant, putting it here for hud
+				//Attributes AlwaysCrit //redundant, putting it here for hud
 			}
 		}
 		WaveSpawn
@@ -2189,7 +2227,7 @@ WaveSchedule
 		}
 		WaveSpawn
 		{
-			TotalCurrency 100
+			TotalCurrency 150
 			WaitForAllDead "wave1a"
 			Where spawnbot
 			Where spawnbot_garage
@@ -2206,7 +2244,7 @@ WaveSchedule
 			}
 		}
 	}
-	Wave //Wave 2 Money: 900
+	Wave //Wave 2 Money: 900 + 100(Buffed)
 	{
 		StartWaveOutput
 		{
@@ -2223,7 +2261,7 @@ WaveSchedule
 		
 		WaveSpawn
 		{
-			TotalCurrency 100
+			TotalCurrency 150
 			Where spawnbot
 			Where spawnbot_garage
 			Where spawnbot_mensch
@@ -2332,7 +2370,7 @@ WaveSchedule
 		}
 		WaveSpawn
 		{
-			TotalCurrency 100
+			TotalCurrency 150
 			Where spawnbot
 			Where spawnbot_garage_giant
 			Where spawnbot_mensch_giant
@@ -2376,7 +2414,7 @@ WaveSchedule
 		}
 		
 	}
-	Wave //Wave 3 Money: 900
+	Wave //Wave 3 Money: 1000 Small money buff for w4+ + 100(Buffed)
 	{
 		StartWaveOutput
 		{
@@ -2396,7 +2434,7 @@ WaveSchedule
 		//Supp: Sniper (support spawn), Spy
 		WaveSpawn
 		{
-			TotalCurrency 100
+			TotalCurrency 150
 			Name "wave3a"
 			Where spawnbot
 			Where spawnbot_garage_giant
@@ -2413,7 +2451,7 @@ WaveSchedule
 		}
 		WaveSpawn
 		{
-			TotalCurrency 100
+			TotalCurrency 150
 			Name "wave3d"
 			Where spawnbot
 			Where spawnbot_garage_giant
@@ -2431,7 +2469,7 @@ WaveSchedule
 		}
 		WaveSpawn
 		{
-			TotalCurrency 150
+			TotalCurrency 100
 			WaitForAllDead "wave3d"
 			Where spawnbot
 			Where spawnbot_garage_giant
@@ -2490,7 +2528,7 @@ WaveSchedule
 		}
 		WaveSpawn
 		{
-			TotalCurrency 100
+			TotalCurrency 150
 			WaitForAllSpawned "wave3b"
 			Where spawnbot_upper
 			Where spawnbot_garage
@@ -2548,7 +2586,7 @@ WaveSchedule
 			}
 		}
 	}
-	Wave //Wave 4 Money: 850
+	Wave //Wave 4 Money: 850 + 100 (Buffed)
 	{
 		StartWaveOutput
 		{
@@ -2594,7 +2632,7 @@ WaveSchedule
 		}
 		WaveSpawn
 		{
-			TotalCurrency 100
+			TotalCurrency 150
 			Where spawnbot
 			Where spawnbot_garage_giant
 			Where spawnbot_mensch_giant
@@ -2646,8 +2684,8 @@ WaveSchedule
 			Where spawnbot_mensch_giant
 			WaitBeforeStarting 13
 			WaitBetweenSpawns 34
-			TotalCount 12
-			MaxActive 4
+			TotalCount 9
+			MaxActive 3
 			SpawnCount 3
 			
 			Squad
@@ -2668,7 +2706,7 @@ WaveSchedule
 		}
 		WaveSpawn
 		{
-			TotalCurrency 100
+			TotalCurrency 150
 			WaitForAllDead "wave4a"
 			WaitBeforeStarting 3
 			WaitBetweenSpawns 13
@@ -2754,7 +2792,7 @@ WaveSchedule
 			}
 		}
 	}
-	//Wave 5 Money: 750
+	//Wave 5 Money: 750 +100 (Buffed)
 	//Theme: Movies
 	Wave
 	{
@@ -2891,7 +2929,7 @@ WaveSchedule
 		}
 		WaveSpawn
 		{
-			TotalCurrency 100
+			TotalCurrency 125
 			Where spawnbot_upper
 			Where spawnbot_garage
 			Where spawnbot_mensch
@@ -2910,7 +2948,7 @@ WaveSchedule
 		}
 		WaveSpawn
 		{
-			TotalCurrency 100
+			TotalCurrency 150
 			WaitForAllSpawned "wave5a"
 			Where spawnbot_upper
 			Where spawnbot_garage
@@ -2964,15 +3002,16 @@ WaveSchedule
 		}
 		WaveSpawn
 		{
-			TotalCurrency 25
+			TotalCurrency 50
 			WaitForAllSpawned "wave5b"
 			Where spawnbot
 			Where spawnbot_garage_giant
 			Where spawnbot_mensch_giant
 			TotalCount 3
-			MaxActive 1
+			MaxActive 2
 			SpawnCount 1
 			WaitBeforeStarting 55
+			WaitBetweenSpawns 30
 			
 			TFBot
 			{
@@ -3044,26 +3083,14 @@ WaveSchedule
 			Where spawnbot
 			Where spawnbot_garage_giant
 			Where spawnbot_mensch_giant
-			TotalCount 10
-			MaxActive 2
-			SpawnCount 2
+			TotalCount 5
+			MaxActive 1
+			SpawnCount 1
 			WaitBetweenSpawns 40
 			
-			Squad
+			TFBot
 			{
-				FormationSize 50
-				TFBot
-				{
-					Template W6_Scout_Super
-				}
-				TFBot
-				{
-					Template W6_Medic_Flicker
-					CharacterAttributes
-					{
-						"move speed bonus" 2
-					}
-				}
+				Template W6_Scout_Super
 			}
 		}
 		WaveSpawn
@@ -3261,7 +3288,7 @@ WaveSchedule
 		}
 		WaveSpawn
 		{
-			TotalCurrency 50
+			TotalCurrency 100
 			WaitForAllDead "wave6demo"
 			Where spawnbot
 			Where spawnbot_garage
@@ -3347,24 +3374,24 @@ WaveSchedule
 				}
 			}
 		}
-		WaveSpawn
-		{
-			TotalCurrency 50
-			WaitForAllSpawned "wave6demo"
-			Where spawnbot
-			Where spawnbot_garage_giant
-			Where spawnbot_mensch_giant
-			WaitBeforeStarting 20
-			WaitBetweenSpawnsAfterDeath 2
-			TotalCount 3
-			MaxActive 1
-			SpawnCount 1
-			
-			TFBot
-			{
-				Template W6_Pyro_Flarerocket
-			}
-		}
+		//WaveSpawn
+		//{
+		//	TotalCurrency 50
+		//	WaitForAllSpawned "wave6demo"
+		//	Where spawnbot
+		//	Where spawnbot_garage_giant
+		//	Where spawnbot_mensch_giant
+		//	WaitBeforeStarting 20
+		//	WaitBetweenSpawnsAfterDeath 2
+		//	TotalCount 3
+		//	MaxActive 1
+		//	SpawnCount 1
+		//	
+		//	TFBot
+		//	{
+		//		Template W6_Pyro_Flarerocket
+		//	}
+		//}
 	}
 	Wave
 	{
