@@ -1,0 +1,9 @@
+// This file must be installed in /tf/ in every SRCDS installation of a tour server, and is used by the medal & website servers.,
+// Map,Mission,Waves
+apikey,todo_insertlegitserverkeyhere,
+mvm_dockyard_rc5b,Spyware Shipping,6
+mvm_downtown_final3,Entertainer's Entourage,7
+mvm_powerplant_rc1,Power Palliative,7
+mvm_steep_rc,Peak Performance,6
+mvm_teien_rc3,Program Seppuku,7
+mvm_waterfront_rc3,Watershed Waylay,6

@@ -1,0 +1,73 @@
+body
+{
+	background: #222222;
+}
+
+.ball
+{
+	width:100px;
+	height:100px;
+	position:fixed;
+}
+
+.c404
+{
+	position: absolute;
+	margin-top: 15%; left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+    font-size: 10vmin;
+	font-family: Product Sans;
+	font-weight: bolder;
+	text-align: center;
+}
+
+.c404Button, .c404Button:visited
+{
+	position: absolute;
+	margin-top: 25%; left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+    font-size: 5vmin;
+	font-family: Product Sans;
+	text-align: center;
+	background: #36c193;
+	line-height: 100px;
+	width: 400px;
+	height: 100px;
+	border-radius: 20px;
+	text-decoration: none;
+}
+
+.c404Button:hover
+{
+	background: #40e5ae;
+	text-decoration: none;
+}
+
+@keyframes blink
+{
+	from, to { color: transparent; }
+	50% { color: #fff; }
+}
+
+.cursor
+{
+	animation: 1s blink step-end infinite;
+	font-weight: bolder;
+}
+
+section
+{
+	background: transparent;
+	color: white;
+	border-radius: 1em;
+	padding: 1em;
+	position: relative;
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	height: 100%;
+}

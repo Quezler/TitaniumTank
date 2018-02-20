@@ -1,0 +1,64 @@
+<NotepadPlus>
+	<UserLang ext="pop" name="mvm_popfile" udlVersion="2.1">
+		<Settings>
+			<Global allowFoldOfComments="no" caseIgnored="no" decimalSeparator="0" foldCompact="no" forcePureLC="0"/>
+			<Prefix Keywords1="no" Keywords2="yes" Keywords3="yes" Keywords4="no" Keywords5="no" Keywords6="no" Keywords7="no" Keywords8="no"/>
+		</Settings>
+		<KeywordLists>
+			<Keywords name="Comments">03 04 00// 01 02</Keywords>
+			<Keywords name="Numbers, prefix1"/>
+			<Keywords name="Numbers, prefix2"/>
+			<Keywords name="Numbers, extras1"/>
+			<Keywords name="Numbers, extras2"/>
+			<Keywords name="Numbers, suffix1"/>
+			<Keywords name="Numbers, suffix2"/>
+			<Keywords name="Numbers, range"/>
+			<Keywords name="Operators1"/>
+			<Keywords name="Operators2"/>
+			<Keywords name="Folders in code1, open">{</Keywords>
+			<Keywords name="Folders in code1, middle"/>
+			<Keywords name="Folders in code1, close">}</Keywords>
+			<Keywords name="Folders in code2, open"/>
+			<Keywords name="Folders in code2, middle"/>
+			<Keywords name="Folders in code2, close"/>
+			<Keywords name="Folders in comment, open"/>
+			<Keywords name="Folders in comment, middle"/>
+			<Keywords name="Folders in comment, close"/>
+			<Keywords name="Keywords1">CharacterAttributes Default DoneOutput EventChangeAttributes ExamplePopulation FirstSpawnOutput InitWaveOutput ItemAttributes LastSpawnOutput Mission Mob OnBombDroppedOutput OnKilledOutput PeriodicSpawn RandomChoice RandomPlacement RevertGateBotsBehavior Squad StartWaveOutput Tank Templates TFBot Wave WaveSchedule WaveSpawn When</Keywords>
+			<Keywords name="Keywords2">boss_ spawnbot T_TF Trigger trigger wave_</Keywords>
+			<Keywords name="Keywords3">Scout Soldier Pyro Demoman Heavy Heavyweapons Engineer Medic Sniper Spy</Keywords>
+			<Keywords name="Keywords4">#base Action AddSentryBusterWhenDamageDealtExceeds AddSentryBusterWhenKillCountExceeds Advanced Attributes AutoJumpMax AutoJumpMin BeginAtWave BehaviorModifiers CanBotsAttackWhileInSpawnRoom Checkpoint Class ClassIcon CooldownTime Count Description DesiredCount DoneWarningSound EventPopfile FirstSpawnWarningSound FixedRespawnWaveTime FormationSize Health InitialCooldown Item ItemName LastSpawnWarningSound MaxActive MaxInterval MaxVisionRange MinimumSeparation MinimumSeparation MinInterval Name NavAreaFilter Objective RandomSpawn RespawnWaveTime RunForThisManyWaves Scale SentryGun Skill Skin Sound SpawnCount Speed StartingCurrency StartingPathTrackNode StartWaveWarningSound Support Tag Target TeleportWhere Template TotalCount TotalCurrency WaitBeforeStarting WaitBetweenSpawns WaitBetweenSpawnsAfterDeath WaitForAllDead WaitForAllSpawned WaitWhenDone WaveDoneWhen WeaponRestrictions Where</Keywords>
+			<Keywords name="Keywords5">Aggressive AirChargeOnly AlwaysCrit AlwaysFireWeapon AutoJump BecomeSpectatorOnDeath BlastImmune BulletImmune DisableDodge FireImmune HoldFireUntilFullReload IgnoreEnemies IgnoreFlag MiniBoss Parachute ProjectileShield RemoveOnDeath RetainBuildings SpawnWithFullCharge SuppressFire TeleportToHint UseBossHealthBar VaccinatorBlast VaccinatorBullets VaccinatorFire</Keywords>
+			<Keywords name="Keywords6">Easy Expert Hard Normal</Keywords>
+			<Keywords name="Keywords7">Mobber Push</Keywords>
+			<Keywords name="Keywords8">MeleeOnly PrimaryOnly SecondaryOnly</Keywords>
+			<Keywords name="Delimiters">00&quot; 01 02&quot; 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23</Keywords>
+		</KeywordLists>
+		<Styles>
+			<WordsStyle bgColor="FFFFFF" fgColor="000000" fontName="" fontStyle="0" name="DEFAULT" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="DD0000" fontName="" fontStyle="0" name="COMMENTS" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="DD0000" fontName="" fontStyle="0" name="LINE COMMENTS" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="0080C0" fontName="" fontStyle="1" name="NUMBERS" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="FF7700" fontName="" fontStyle="1" name="KEYWORDS1" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="D500D5" fontName="" fontStyle="1" name="KEYWORDS2" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="FF0080" fontName="" fontStyle="1" name="KEYWORDS3" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="0000FF" fontName="" fontStyle="1" name="KEYWORDS4" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="8000FF" fontStyle="1" name="KEYWORDS5" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="005E00" fontStyle="1" name="KEYWORDS6" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="6F6F6F" fontStyle="1" name="KEYWORDS7" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="7171FF" fontStyle="1" name="KEYWORDS8" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="000000" fontName="" fontStyle="0" name="OPERATORS" nesting="0"/>
+			<WordsStyle bgColor="ffffff" fgColor="000000" fontName="" fontStyle="0" name="FOLDER IN CODE1" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="000000" fontStyle="0" name="FOLDER IN CODE2" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="000000" fontStyle="0" name="FOLDER IN COMMENT" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="008040" fontName="" fontStyle="2" name="DELIMITERS1" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="000000" fontName="" fontStyle="0" name="DELIMITERS2" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="000000" fontName="" fontStyle="0" name="DELIMITERS3" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="000000" fontStyle="0" name="DELIMITERS4" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="000000" fontStyle="0" name="DELIMITERS5" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="000000" fontStyle="0" name="DELIMITERS6" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="000000" fontStyle="0" name="DELIMITERS7" nesting="0"/>
+			<WordsStyle bgColor="FFFFFF" fgColor="000000" fontStyle="0" name="DELIMITERS8" nesting="0"/>
+		</Styles>
+	</UserLang>
+</NotepadPlus>

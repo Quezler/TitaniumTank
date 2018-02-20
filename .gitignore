@@ -1,0 +1,4 @@
+# Files to ignore when considering what GIT should commit.
+
+#Don't commit our real Steam API keys, medal promo ID, etc.
+tour/data/private/*.csv

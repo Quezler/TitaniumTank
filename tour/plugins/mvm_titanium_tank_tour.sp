@@ -48,6 +48,8 @@ char g_AuthKey[256];						// Authentication key to provide to the tour server fo
 char g_MapName[64];							// Name of current map
 char g_MissionIndexStr[4];					// The mission index, stored as a string
 char g_ServerPort[8];						// The server's port number
+char g_ServerNumberStr[4];					// Holds the server number (extracted from the hostname cvar).
+char g_IsPassworded[4];						// Holds a boolean (as a string) on whether the server is password protected or not.
 
 int g_MaxWaves;								// The most number of waves a mission in this tour has. (Used to print the tour progress table on the client's console.)
 int g_ObjRescRef = INVALID_ENT_REFERENCE;	// Entity reference of CTFObjectiveResource (cached for optimization).
@@ -58,7 +60,7 @@ int g_ClientCmdThrottle[MAXPLAYERS];
 
 // Global handles
 ArrayList g_MapsList;					// Store each map name in the order set in the csv file so we can map a map name to a mission index.
-File BackupCSV;							// As a backup in case the tour server shit hits the fan, store the data LOCALLY in a csv file.
+File g_BackupCSV;						// As a backup in case the tour server shit hits the fan, store the data LOCALLY in a csv file.
 StringMap g_MissionWaveCount;			// Stores each map name paired with the number of waves they have.
 
 
@@ -70,7 +72,7 @@ StringMap g_MissionWaveCount;			// Stores each map name paired with the number o
  **/
 
 // Debug macro
-//#define DEBUG
+#define DEBUG
 
 // Kick message
 #define CLIENT_KICK_MESSAGE		"This server is currently full. Please try joining later! Thank you"		// No period since the engine appends one at the end automatically.
@@ -152,9 +154,21 @@ public void OnPluginStart()
  	RegConsoleCmd("sm_tt_tour",    TT_TourCommand);			// Displays progress for the whole tour.
   	RegConsoleCmd("sm_tt_url",     TT_UrlCommand);			// Displays a link to the tour website.
   	
+  	// Convar change hooks
+  	HookConVarChange(FindConVar("hostname"), TT_OnHostnameChange);
+  	HookConVarChange(FindConVar("sv_password"), TT_OnPasswordChange);
+  	
   	// Create a timer that spins once every 10 seconds to broadcast the server information to the tour website server.
   	// This allows people to easily check for servers that have any slots open:
-  	CreateTimer(10.0, TT_ReportServerData, _, TIMER_REPEAT);
+  	#if defined DEBUG
+  		CreateTimer(1.0, TT_ReportServerData, _, TIMER_REPEAT);  	
+  	#else
+  		CreateTimer(10.0, TT_ReportServerData, _, TIMER_REPEAT);
+  	#endif
+  	
+  	// Init the global strings:
+  	strcopy(g_ServerNumberStr, sizeof(g_ServerNumberStr), "-1");		// Will change in the hostname change callback.
+  	strcopy(g_IsPassworded, sizeof(g_IsPassworded), "0");				// By default, not passworded.
 }
 
 
@@ -263,7 +277,8 @@ public bool OnClientConnect(int iClient, char[] RejectMessage, int maxlen)
 
 public Action TT_TestCommand(int iClient, int nArgs)
 {
-	
+	TT_RecordClientTourProgress(iClient, "76561198071195301", "1519146113", "3");
+	return Plugin_Handled;
 }
 
 #endif
@@ -285,11 +300,8 @@ public Action TT_MissionCommand(int iClient, int nArgs)
 	char Steam64[32];
 	GetClientAuthId(iClient, AuthId_SteamID64, Steam64, sizeof(Steam64));
 	
-	// Create a HTTP GET request to the tour server to fetch the data for this mission for this client:
-	Handle GetRequest = SteamWorks_CreateHTTPRequest(k_EHTTPMethodGET, "http://localhost:65432/");
-	
-	// Even though the tour server is inaccessible outside of localhost, to be safe, pass the unique key to the POST request:
-	SteamWorks_SetHTTPRequestGetOrPostParameter(GetRequest, "key", g_AuthKey);
+	// Create a HTTP GET request to the website server to fetch the data for this mission for this client:
+	Handle GetRequest = SteamWorks_CreateHTTPRequest(k_EHTTPMethodGET, "http://73.233.9.103:27000/TitaniumTank/VDF/");
 	
 	// Pass the steam ID of the client who wants their tour progress:
 	SteamWorks_SetHTTPRequestGetOrPostParameter(GetRequest, "steam64", Steam64);
@@ -326,11 +338,8 @@ public Action TT_TourCommand(int iClient, int nArgs)
 	char Steam64[32];
 	GetClientAuthId(iClient, AuthId_SteamID64, Steam64, sizeof(Steam64));
 
-	// Create a HTTP GET request to the tour server to fetch the full tour data:
-	Handle GetRequest = SteamWorks_CreateHTTPRequest(k_EHTTPMethodGET, "http://localhost:65432/");
-	
-	// Even though the tour server is inaccessible outside of localhost, to be safe, pass the unique key to the POST request:
-	SteamWorks_SetHTTPRequestGetOrPostParameter(GetRequest, "key", g_AuthKey);
+	// Create a HTTP GET request to the websiite server to fetch the full tour data:
+	Handle GetRequest = SteamWorks_CreateHTTPRequest(k_EHTTPMethodGET, "http://73.233.9.103:27000/TitaniumTank/VDF/");
 	
 	// Pass the steam ID of the client who wants their tour progress:
 	SteamWorks_SetHTTPRequestGetOrPostParameter(GetRequest, "steam64", Steam64);
@@ -365,7 +374,7 @@ public Action TT_UrlCommand(int iClient, int nArgs)
 	}
 	
 	// Build the URL to the tour page and print it to the client:
-	ReplyToCommand(iClient, "[TT] Your tour progress can be seen at:\nhttp://73.233.9.103:26999/TitaniumTank/%s", Steam64);
+	ReplyToCommand(iClient, "[TT] Your tour progress can be seen at:\nhttp://73.233.9.103:27000/TitaniumTank/%s", Steam64);
 	return Plugin_Handled;
 }
 
@@ -379,7 +388,7 @@ public Action TT_UrlCommand(int iClient, int nArgs)
 
 
 // Called when a HTTP GET request is completed.
-// This fetches a player's mission progress or global tour data from the tour progress server.
+// This fetches a player's mission progress or global tour data from the tour website server.
 
 public int TT_OnGetRequestCompleted(Handle RequestHandle, bool Failure, bool RequestSuccessful, EHTTPStatusCode StatusCode, int Userid, TourDataType TourType)
 {
@@ -507,6 +516,69 @@ stock void TT_PrintTourProgress(int iClient, KeyValues kv)
 
 
 /**
+ * Cvar hooks
+ **/
+
+
+// Called every time the hostname cvar on the server is changed.
+// This should only ever be called once, and on server startup. We want to determine the server number of this server.
+// We can get this from the hostname string, which has something like "Server #x" on it. We need the value of x.
+
+public void TT_OnHostnameChange(ConVar CvarHandle, const char[] OldValue, const char[] NewValue)
+{
+	// Build the server number in this string here:
+	char ServerNumber[4]; 			// Not going to host more than 1000 servers....
+	
+	// Find where the # is. If not found, abort:
+	int Idx = FindCharInString(NewValue, '#');
+	if (Idx == -1)
+		return;
+	
+	// Move that index up by 1. Now the index should point to a digit value:
+	++Idx;
+	
+	// From that index, up to the full length of the string, only slap in numerical characters:
+	int index;
+	for (int i = Idx; i < strlen(NewValue); i++)
+	{
+		// If we find a NON-numerical character, break out:
+		if (!IsCharNumeric(NewValue[i]))
+			break;
+		
+		// Otherwise, put it into the string:
+		ServerNumber[index] = NewValue[i];
+		++index;
+	}
+	
+	// Null-terminate:
+	ServerNumber[index] = 0;
+	
+	// Save it globally:
+	strcopy(g_ServerNumberStr, sizeof(g_ServerNumberStr), ServerNumber);
+}
+
+
+
+
+
+// Called everytime the password is changed.
+
+public void TT_OnPasswordChange(ConVar CvarHandle, const char[] OldValue, const char[] NewValue)
+{
+	// If it is an empty string, set it to 0 (no password).
+	if (StrEqual(NewValue, ""))
+		strcopy(g_IsPassworded, sizeof(g_IsPassworded), "0");
+	
+	// Otherwise, set it to 1 (there is a password).
+	else
+		strcopy(g_IsPassworded, sizeof(g_IsPassworded), "1");
+}
+
+
+
+
+
+/**
  * Event hooks
  **/
 
@@ -611,8 +683,39 @@ public Action TT_OnWaveComplete(Event hEvent, const char[] EventName, bool DontB
  **/
 
 
+// Called 1 second after server.cfg has been executed.
+// Grab the server number from the name of the server and store it globally.
+
+public Action TT_OnConfigsExecutedDelay(Handle timer)
+{
+	// Sourcemod weirdness: Server name can be retrieved from client index 0 to GetClientName.
+	char ServerName[256];
+	GetClientName(0, ServerName, sizeof(ServerName));
+	
+	// Split along the #:
+	// Assumption: We're assuming servers are named like Server #1, #2, ... otherwise this will fail badly.
+	char SplitStr[2][4];
+	ExplodeString(ServerName, "#", SplitStr, sizeof(SplitStr), sizeof(SplitStr[]));
+	
+	// Try turning this into an integer. If it fails, exit early:
+	if (StringToInt(SplitStr[1]) == 0)
+	{
+		LogError("Warning: Server name '%s' is missing a server number!");
+		return;
+	}
+	
+	// Otherwise, store this value globally.
+	strcopy(g_ServerNumberStr, sizeof(g_ServerNumberStr), SplitStr[1]);
+}
+
+
+
+
+
 // Called once every 10 seconds.
+// 
 // Report server data to the tour server so clients can check on the tour servers' status.
+// This information is displayed on the server information page on the tour server website.
 
 public Action TT_ReportServerData(Handle timer)
 {
@@ -630,7 +733,7 @@ public Action TT_ReportServerData(Handle timer)
 		else
 			++ConnectingPlayers;
 	}
-
+	
 	// Grab the round status:
 	int Status = view_as<int>(GameRules_GetRoundState());
 	
@@ -645,22 +748,29 @@ public Action TT_ReportServerData(Handle timer)
 	IntToString(CurrentWave, WaveStr, sizeof(WaveStr));
 	
 	// Create a HTTP POST request to the tour website server:
-	Handle PostRequest = SteamWorks_CreateHTTPRequest(k_EHTTPMethodPOST, "http://localhost:26999/");
+	Handle PostRequest = SteamWorks_CreateHTTPRequest(k_EHTTPMethodPOST, "http://73.233.9.103:27000/TitaniumTank/Servers/");
 	
-	// Pass the unique authentication key to the POST request:
+	// Pass the Titanium Tank API key to the POST request.
+	// This is required, so that the website server knows that this is a legitimate Titanium Tank Tour server.
 	SteamWorks_SetHTTPRequestGetOrPostParameter(PostRequest, "key", g_AuthKey);
 	
+	// Pass the server number:
+	SteamWorks_SetHTTPRequestGetOrPostParameter(PostRequest, "number", g_ServerNumberStr);
+
 	// Pass the mission index, wave number, and round state:
 	SteamWorks_SetHTTPRequestGetOrPostParameter(PostRequest, "mission", g_MissionIndexStr);
 	SteamWorks_SetHTTPRequestGetOrPostParameter(PostRequest, "wave", WaveStr);
-	SteamWorks_SetHTTPRequestGetOrPostParameter(PostRequest, "state", RoundStr);
+	SteamWorks_SetHTTPRequestGetOrPostParameter(PostRequest, "roundstate", RoundStr);
 
 	// Pass the number of defending players and connecting players:
 	SteamWorks_SetHTTPRequestGetOrPostParameter(PostRequest, "defenders", DefendingStr);
 	SteamWorks_SetHTTPRequestGetOrPostParameter(PostRequest, "connecting", ConnectingStr);
 	
+	// Pass the password-protected boolean:
+	SteamWorks_SetHTTPRequestGetOrPostParameter(PostRequest, "haspassword", g_IsPassworded);
+
 	// Pass the server port number:
-	SteamWorks_SetHTTPRequestGetOrPostParameter(PostRequest, "port", g_ServerPort);
+	SteamWorks_SetHTTPRequestGetOrPostParameter(PostRequest, "port", g_ServerPort);			// might not need this if the IP address 
 	
 	// Send the request to the website server:
 	SteamWorks_SendHTTPRequest(PostRequest);
@@ -699,7 +809,7 @@ stock void TT_InitFileSystem()
 		ExplodeString(FileLine, ",", SplitStr, sizeof(SplitStr), sizeof(SplitStr[]));
 		
 		// If the first value is a key then store it globally:
-		if (StrEqual(SplitStr[0], "key", false))
+		if (StrEqual(SplitStr[0], "apikey", false))
 			strcopy(g_AuthKey, sizeof(g_AuthKey), SplitStr[1]);
 		
 		// If the name begins with mvm_, then put the map name into the array.
@@ -716,7 +826,7 @@ stock void TT_InitFileSystem()
 	
 	// Open the local tour progress CSV file and hold on to its handle forever.
 	// Open it in append mode so that new writes add to the end of the file.
-	BackupCSV = OpenFile("_tour_progress.csv", "a");
+	g_BackupCSV = OpenFile("_tour_progress.csv", "a");
 }
 
 
@@ -749,7 +859,7 @@ stock int TT_GetCurrentWave()
 
 stock void TT_RecordClientTourProgress(int iClient, const char[] Steam64, const char[] TimeStampStr, const char[] WaveStr)
 {
-	// The tour progress server is running on a port that's not open to the world wide web.
+	// The medal server is running on a port that's not open to the world wide web.
 	// We can use localhost to directly connect to it from here, while preventing other community servers from interacting with it.
 	// Unfortunately, this locks the medal to our servers only, but it prevents other servers from cheating the medal.
 	Handle PostRequest = SteamWorks_CreateHTTPRequest(k_EHTTPMethodPOST, "http://localhost:65432/");
@@ -773,11 +883,14 @@ stock void TT_RecordClientTourProgress(int iClient, const char[] Steam64, const 
 	// Send the request to the tour server.
 	SteamWorks_SendHTTPRequest(PostRequest);
 	
-	// Then write it to the CSV file as an insurance backup:
-	BackupCSV.WriteLine("%s,%s,%s,%s", Steam64, TimeStampStr, g_MissionIndexStr, WaveStr);
+	// Then write it to the CSV file as an insurance backup record:
+	g_BackupCSV.WriteLine("%s,%s,%s,%s", Steam64, TimeStampStr, g_MissionIndexStr, WaveStr);
 	
 	// Notify the client:
 	PrintToChat(iClient, "\x081BFFFFFF[TT] Your progress on this wave has been recorded.");
+	
+	// Log to console, just to be safe again:
+	LogMessage("%L received a wave credit on mission %s and wave %s.", iClient, g_MissionIndexStr, WaveStr);
 	
 	// Clean up:
 	delete PostRequest;

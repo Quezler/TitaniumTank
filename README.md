@@ -3,4 +3,4 @@ This repository contains all the files for *Potato's MvM Server's* **Operation T
 
 This is an **unofficial** community Mann vs Machine contest + tour event.
 
-![alt text](https://raw.githubusercontent.com/hydrogen-mvm/TitaniumTank/master/Tour/website/img/medal.png)
+![alt text](https://raw.githubusercontent.com/hydrogen-mvm/TitaniumTank/master/tour/website/img/medal.png)
