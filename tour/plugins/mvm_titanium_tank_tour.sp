@@ -71,8 +71,8 @@ StringMap g_MissionWaveCount;			// Stores each map name paired with the number o
  * Macros
  **/
 
-// Debug macro
-#define DEBUG
+// Enable this for troubleshooting.
+// #define DEBUG
 
 // Kick message
 #define CLIENT_KICK_MESSAGE		"This server is currently full. Please try joining later! Thank you"		// No period since the engine appends one at the end automatically.
@@ -277,8 +277,7 @@ public bool OnClientConnect(int iClient, char[] RejectMessage, int maxlen)
 
 public Action TT_TestCommand(int iClient, int nArgs)
 {
-	TT_RecordClientTourProgress(iClient, "76561198071195301", "1519146113", "3");
-	return Plugin_Handled;
+
 }
 
 #endif
@@ -770,7 +769,7 @@ public Action TT_ReportServerData(Handle timer)
 	SteamWorks_SetHTTPRequestGetOrPostParameter(PostRequest, "haspassword", g_IsPassworded);
 
 	// Pass the server port number:
-	SteamWorks_SetHTTPRequestGetOrPostParameter(PostRequest, "port", g_ServerPort);			// might not need this if the IP address 
+	SteamWorks_SetHTTPRequestGetOrPostParameter(PostRequest, "port", g_ServerPort);
 	
 	// Send the request to the website server:
 	SteamWorks_SendHTTPRequest(PostRequest);
