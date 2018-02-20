@@ -46,6 +46,7 @@ from urllib.request import Request, urlopen
 #
 #To note: This server is NOT open to the world wide web. Only localhost and machines on
 #the same LAN network as this server can send POST requests to it. This prevents other
+#community servers or outsiders from interacting with this server.
 
 class TourProgressHandler(SimpleHTTPRequestHandler):
 
