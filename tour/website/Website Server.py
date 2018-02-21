@@ -52,7 +52,7 @@ class TourProgressWebsite(SimpleHTTPRequestHandler):
 #
 #- Clients visiting the tour website and serving HTML to them.
 #- Clients' javascript requesting raw data in CSV format.
-#- Servers requesting client tour progress for admin commands.
+#- Servers requesting client tour progress in VDF (keyvalues) format.
 
     def do_GET(self):
 
@@ -486,7 +486,7 @@ class TourProgressWebsite(SimpleHTTPRequestHandler):
         #Nobody except authorized tour servers have any reason to make a POST request with
         #a Titanium Tank API key.
         key = params_dict["key"][0]
-        if key != master.tt_api_key:
+        if key != p.tt_api_key:
             p.banned_post_ips.add(client_ip)
             p.ip_requests_count[client_ip] = 9001
             return None
@@ -904,7 +904,7 @@ class potato(object):
         #to the client immediately when they ask for it. This means we can compile it once and serve it to infinite clients.
         #
         #The one downside is we compile this data even if nobody ever asks for it, but the generation is usually done at a
-        #moment that nobody is accessing the demo site so the performance hit should be unnoticeable.
+        #moment that nobody is accessing the tour site so the performance hit should be unnoticeable.
         self.build_global_chart_csv()
 
 
@@ -1207,8 +1207,7 @@ class potato(object):
         #Put all the dictionaries we have created in a single list:
         dictionary_list =   cumulative_map_date_participants_counts + cumulative_map_date_completists_counts + [timestamp_participated_dict, timestamp_completed_dict,
                             new_mission_participants, new_mission_completists, unique_wave_credits_awarded_dict, self.wave_credits_earned_per_day]
-                          
-
+        
         #Using that dictionary list, generate the CSV rows for each dictionary in it.
         #Loop across each date key:
         for x in date_keys:
