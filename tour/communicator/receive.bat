@@ -1,2 +1,2 @@
-python external_test.py -receive
+python Medal_Server_Communicator.py -receive
 pause

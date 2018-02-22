@@ -1,2 +1,2 @@
-python external_test.py -fake
+python Medal_Server_Communicator.py -fake
 pause

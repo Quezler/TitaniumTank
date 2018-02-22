@@ -326,9 +326,9 @@ def get_key_from_csv(csv_file, key):
             if x[0].lower() == key:
                 return x[1]
 
-tt_api_key =   get_key_from_csv("../Tour Information.csv", "apikey")
-aes_key =      get_key_from_csv("../AES Key.csv", "aes").encode()           #Needs to be bytes string
-aes_init = int(get_key_from_csv("../AES Key.csv", "init"))                  #Needs to be an integer
+tt_api_key =   get_key_from_csv("../data/Tour Information.csv", "apikey")
+aes_key =      get_key_from_csv("../data/AES Key.csv", "aes").encode()           #Needs to be bytes string
+aes_init = int(get_key_from_csv("../data/AES Key.csv", "init"))                  #Needs to be an integer
 
 #Make sure the keys are valid:
 if tt_api_key is None or aes_key is None:
