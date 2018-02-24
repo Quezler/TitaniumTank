@@ -72,6 +72,10 @@ class TourProgressHandler(SimpleHTTPRequestHandler):
 
     def handle_post_data(self):
 
+        #No matter what, send HTTP code 200 to the request.
+        self.send_response(200)
+        self.end_headers()
+
         #Determine how much data we need to read in. Cap it at 1024 bytes as a sanity limit:
         content_len = int(self.headers['content-length'])
         if content_len > 1024:

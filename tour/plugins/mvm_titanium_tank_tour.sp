@@ -240,7 +240,12 @@ public void OnClientPostAdminCheck(int iClient)
 
 public bool OnClientConnect(int iClient, char[] RejectMessage, int maxlen)
 {
-	// If the server is full, copy the rejection message and return false to drop them:
+	// For some bizarre reason, bots sometimes trigger this function.
+	// Check if this client is a bot. If so, always return true.
+	if (IsFakeClient(iClient))
+		return true;
+	
+	// If the server is full, copy the rejection message and return false to drop the client:
 	if (TT_GetTotalDefendingPlayers() == MAX_MVM_PLAYERS)
 	{
 		strcopy(RejectMessage, maxlen, CLIENT_KICK_MESSAGE);
