@@ -241,8 +241,8 @@ WaveSchedule
 			CharacterAttributes
 			{
 				"move speed bonus"	0.5
-				"damage force reduction" 0.3
-				"airblast vulnerability multiplier" 0.3
+				"damage force reduction" 0.1
+				"airblast vulnerability multiplier" 0.1
 				"override footstep sound set" 2
 				"minicrits become crits" 1
 				"rage giving scale" 0.1
@@ -266,6 +266,8 @@ WaveSchedule
             {
 				"ubercharge rate bonus" 5.0
 				//"move speed bonus" 0.5
+				"damage force reduction" 0.1
+				"airblast vulnerability multiplier" 0.1
 				"heal rate bonus" 16.0
 				"bot medic uber health threshold" 50000
 				"health regen" 100

@@ -52,7 +52,7 @@ function get_server_ip_address()
 	// 
 	// Some of these pages are also hosted using GitHub pages (as a backup),
 	// so if this page is on GitHub Pages, then return the server IP (which we hard-code in).
-	return (url[2] === "hydrogen-mvm.github.io") ? "73.233.9.103:27000" :  url[2];
+	return (url[2] === "hydrogen-mvm.github.io") ? "98.114.174.78:27000" :  url[2];
 }
 
 

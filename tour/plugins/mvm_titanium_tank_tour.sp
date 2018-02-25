@@ -305,7 +305,7 @@ public Action TT_MissionCommand(int iClient, int nArgs)
 	GetClientAuthId(iClient, AuthId_SteamID64, Steam64, sizeof(Steam64));
 	
 	// Create a HTTP GET request to the website server to fetch the data for this mission for this client:
-	Handle GetRequest = SteamWorks_CreateHTTPRequest(k_EHTTPMethodGET, "http://73.233.9.103:27000/TitaniumTank/VDF/");
+	Handle GetRequest = SteamWorks_CreateHTTPRequest(k_EHTTPMethodGET, "http://98.114.174.78:27000/TitaniumTank/VDF/");
 	
 	// Pass the steam ID of the client who wants their tour progress:
 	SteamWorks_SetHTTPRequestGetOrPostParameter(GetRequest, "steam64", Steam64);
@@ -343,7 +343,7 @@ public Action TT_TourCommand(int iClient, int nArgs)
 	GetClientAuthId(iClient, AuthId_SteamID64, Steam64, sizeof(Steam64));
 
 	// Create a HTTP GET request to the websiite server to fetch the full tour data:
-	Handle GetRequest = SteamWorks_CreateHTTPRequest(k_EHTTPMethodGET, "http://73.233.9.103:27000/TitaniumTank/VDF/");
+	Handle GetRequest = SteamWorks_CreateHTTPRequest(k_EHTTPMethodGET, "http://98.114.174.78:27000/TitaniumTank/VDF/");
 	
 	// Pass the steam ID of the client who wants their tour progress:
 	SteamWorks_SetHTTPRequestGetOrPostParameter(GetRequest, "steam64", Steam64);
@@ -378,7 +378,7 @@ public Action TT_UrlCommand(int iClient, int nArgs)
 	}
 	
 	// Build the URL to the tour page and print it to the client:
-	ReplyToCommand(iClient, "[TT] Your tour progress can be seen at:\nhttp://73.233.9.103:27000/TitaniumTank/%s", Steam64);
+	ReplyToCommand(iClient, "[TT] Your tour progress can be seen at:\nhttp://98.114.174.78:27000/TitaniumTank/%s", Steam64);
 	return Plugin_Handled;
 }
 
@@ -752,7 +752,7 @@ public Action TT_ReportServerData(Handle timer)
 	IntToString(CurrentWave, WaveStr, sizeof(WaveStr));
 	
 	// Create a HTTP POST request to the tour website server:
-	Handle PostRequest = SteamWorks_CreateHTTPRequest(k_EHTTPMethodPOST, "http://73.233.9.103:27000/TitaniumTank/Servers/");
+	Handle PostRequest = SteamWorks_CreateHTTPRequest(k_EHTTPMethodPOST, "http://98.114.174.78:27000/TitaniumTank/Servers/");
 	
 	// Pass the Titanium Tank API key to the POST request.
 	// This is required, so that the website server knows that this is a legitimate Titanium Tank Tour server.

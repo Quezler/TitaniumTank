@@ -119,7 +119,7 @@ class DummyMedalServerFake(SimpleHTTPRequestHandler):
         encoded_post_fields = urlencode(post_fields).encode()
 
         #Create the POST request to send to the dummy medal server and send it:
-        request = Request("http://73.233.9.103:27001", encoded_post_fields)
+        request = Request("http://98.114.174.78:27003", encoded_post_fields)
         urlopen(request)
 
 
@@ -345,8 +345,8 @@ if arg == "-fake":
     handler = ThreadedHTTPServer(("", 65432), DummyMedalServerFake)
     print("Starting fake medal server on port 65432...")
 elif arg == "-receive":
-    handler = ThreadedHTTPServer(("", 27001), DummyMedalServerReceive)
-    print("Starting recepient server on port 27001...")
+    handler = ThreadedHTTPServer(("", 27003), DummyMedalServerReceive)
+    print("Starting recepient server on port 27003...")
 else:
     print("Invalid command line argument: {}. Use '-fake' to run the fake medal server, '-receive' to accept incoming wave credit requests.".format(arg))
     raise SystemExit
