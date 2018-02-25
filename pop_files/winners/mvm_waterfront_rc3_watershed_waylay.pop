@@ -9,7 +9,7 @@
 //
 // 5244 total credits (5844 with A+)
 // 
-// FINAL VERSION
+// FINAL VERSION (for real this time guys)
 
 #base robot_giant.pop
 #base robot_standard.pop
@@ -1859,7 +1859,7 @@ WaveSchedule
 					Skill Expert
 					Health 10000
 					Scale 1.9
-					ClassIcon soldier_major_crits
+					ClassIcon soldier_chief_battalions
 					Item "Fancy Dress Uniform"
 					Item "concealedkiller_rocketlauncher_woodlandwarrior"
 					Item "The Battalion's Backup"
