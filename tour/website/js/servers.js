@@ -20,6 +20,9 @@
 // Roundstate enum:
 const g_RoundState = ["Init", "Waiting", "Start Game", "Preround", "In-Wave", "Wave Lost", "Restart", "Stalemate", "Game Won", "Bonus", "Setup"];
 
+// Map names:
+const g_MapNames =  ["Dockyard", "Downtown", "Powerplant", "Steep", "Teien", "Waterfront"];
+
 
 
 
@@ -53,6 +56,10 @@ function build_server_table(csv_data)
 	// The first row is the time stamp of the current time on the server.
 	var server_time = Number(rows[0]);
 	
+	// Take the rest of the rows and *sort* them by player count and map name.
+	// This will display the servers list in a format that is beneficial to all players.
+	var sorted_server_data = sort_server_data(rows);
+	
 	// From the server's timestamp, get the current timestamp and determine by how many seconds we have to offset
 	// the server's timestamps by to display the time stamps at the client's time zone:
 	var current_time = Math.floor(Date.now()/1000);
@@ -70,23 +77,23 @@ function build_server_table(csv_data)
 				<th>Last updated</th></tr>'];
 	
 	// Per row:
-	for (var i = 1; i < rows.length; i++)
+	for (var i = 1; i < sorted_server_data.length; i++)
 	{
-		// Split the data up:
-		var split_data = rows[i].split(",");
+		// Grab the row object:
+		var row = sorted_server_data[i];
 		
 		// Extract the values:
-		var server_number 		= split_data[0];
-		var is_passworded 		= Number(split_data[1]);
-		var map_name 	  		= split_data[2];
-		var connected_players	= Number(split_data[3]);
-		var connecting_players	= Number(split_data[4]);
-		var wave_number 		= split_data[5];
-		var total_waves 		= split_data[6];
-		var roundstate_enum 	= split_data[7];
-		var server_ip 			= split_data[8];
-		var server_port 		= split_data[9];
-		var last_updated_time 	= Number(split_data[10]);
+		var server_number 		= row[0];
+		var is_passworded 		= row[1];
+		var map_index 	  		= row[2];
+		var connected_players	= row[3];
+		var connecting_players	= row[4];
+		var wave_number 		= row[5];
+		var total_waves 		= row[6];
+		var roundstate_enum 	= row[7];
+		var server_ip 			= row[8];
+		var server_port 		= row[9];
+		var last_updated_time 	= row[10]
 		
 		// First column is if the server is password protected or not:
 		if (is_passworded === 1)
@@ -102,13 +109,20 @@ function build_server_table(csv_data)
 		table.push('<td><p style="text-align:center;">Titanium Tank Server #' + server_number + '</p></td>');
 		
 		// Third is the map name:
-		table.push('<td><p style="text-align:center;">' + map_name + '</p></td>');
+		table.push('<td><p style="text-align:center;"><font color="#00FFFF">' + g_MapNames[map_index] + '</font></p></td>');
 		
 		// Next up is the players connected count.
 		
 		// If the server has 6 players connected or connecting to it, make the player color text green.
 		// Otherwise, make it yellow, so that at-a-glance players can see which servers are vacant.
-		var color_string = ((connected_players + connecting_players) === 6) ? "#00FF00" : "#FFFF00";
+		var total_players = connected_players + connecting_players;
+		var color_string;
+		if (total_players === 0)
+			color_string = "#F8A5A9";	// Empty server = red
+		else if (total_players >= 6)
+			color_string = "#00FF00";	// Full server = green
+		else
+			color_string = "#FFFF00";	// Partially full server = yellow.
 		
 		// If we have players CONNECTING then use the [+x] box to denote who is connecting.
 		// Don't lump them into the total player count until they join RED, since other people can still get in until there are 6 RED players.
@@ -154,6 +168,92 @@ function build_server_table(csv_data)
 	// Insert the current timestamp as the last-queried time into the page:
 	var d = new Date();
 	document.getElementById('server_last_update_time').innerHTML = '<p style="text-align:center;"><i>Server info last queried on</i><br/><b>' + d.toLocaleDateString() + ' ' +  d.toLocaleTimeString() + '</b></p>'
+}
+
+
+
+
+
+// Sorts the given server data by player count and 
+
+function sort_server_data(rows)
+{
+	// First, group the data into 3 places:
+	var full_servers = [];		// Full servers
+	var empty_servers = [];		// Empty servers
+	var partial_servers = [];	// Partially filled servers
+	var locked_servers = [];	// Locked servers
+	
+	// Per row in the data set:
+	for (var i = 1; i < rows.length; i++)
+	{
+		// Split the data up:
+		var split_data = rows[i].split(",");
+		
+		// Convert relevant values into integers:
+		split_data[1] = Number(split_data[1]);		// Is passworded
+		split_data[2] = Number(split_data[2]);		// Map number
+		split_data[3] = Number(split_data[3]);		// ConnectED players
+		split_data[4] = Number(split_data[4]);		// ConnectING players
+		split_data[5] = Number(split_data[5]);		// Wave number
+		split_data[10] = Number(split_data[10]);	// Last updated timestamp
+		
+		// If the server is locked, then put the server information in the locked array and move on.
+		if (split_data[1] === 1)
+		{
+			locked_servers.push(split_data);
+			continue;
+		}
+		
+		// Grab the total number of players:
+		var total_players = split_data[3] + split_data[4];
+		
+		// Based on this value, put the entire row in the appropriate array:
+		if (total_players >= 6)
+			full_servers.push(split_data);
+		else if (total_players === 0)
+			empty_servers.push(split_data);
+		else
+			partial_servers.push(split_data);
+	}
+	
+	// Now sort each array based on the number of players, map name, and wave number.
+	full_servers.sort(server_sort_callback);
+	empty_servers.sort(server_sort_callback);
+	partial_servers.sort(server_sort_callback);
+	locked_servers.sort(server_sort_callback);
+	
+	// Merge all the arrays together:
+	var everything = partial_servers.concat(empty_servers).concat(full_servers).concat(locked_servers);
+	return everything;
+}
+
+
+
+
+
+// Sorts the given array of server information.
+// Return 1 if x > y, -1 if x < y, 0 if x = y.
+
+function server_sort_callback(row1, row2)
+{
+	// Compare player numbers first:
+	var totalplayers_1 = row1[3] + row1[4];
+	var totalplayers_2 = row2[3] + row2[4];
+	
+	if (totalplayers_1 > totalplayers_2)		// Sort in reverse order (high->low)
+		return -1;
+	if (totalplayers_2 > totalplayers_1)
+		return 1;
+	
+	// Otherwise, compare by wave number.
+	if (row1[5] > row2[5])						// Sort in reverse order (high->low)
+		return -1;
+	if (row2[5] > row1[5])
+		return 1;
+	
+	// They both are equal.
+	return 0;
 }
 
 

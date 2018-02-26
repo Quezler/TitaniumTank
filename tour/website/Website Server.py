@@ -213,7 +213,7 @@ class TourProgressWebsite(SimpleHTTPRequestHandler):
 
         #Add subsequent servers to it:
         server_dict = master.server_info_dict
-        for x in sorted(server_dict):
+        for x in server_dict:
 
             #If the server hasn't reported an update for over a minute now, assume it went offline.
             #Only include servers that have reported data sometime within the past minute.
@@ -470,6 +470,14 @@ class TourProgressWebsite(SimpleHTTPRequestHandler):
         #Grab the IP address of the client:
         client_ip = self.client_address[0]
 
+        #For some reason, depending on the network, we get a local IP address, even if the client
+        #sent the POST request to the public IP address. Here's one crappy workaround to this:
+        if client_ip.startswith("192.") or client_ip.endswith("0.1"):
+            try:
+                client_ip = self.headers["Host"].split(":")[0]
+            except:
+                pass
+		
         #Cache the master object locally:
         p = master
 
@@ -501,11 +509,11 @@ class TourProgressWebsite(SimpleHTTPRequestHandler):
         is_passworded = params_dict["haspassword"][0]
         port_number   = params_dict["port"][0]
 
-        #Convert the mission index into a map name and get the total number of waves for it):
-        (map_name, total_waves) = p.tour_maps_list[int(mission_index)]
+        #Get the total number of waves for this mission:
+        total_waves = p.tour_maps_list[int(mission_index)][1]
 
         #Place all this into the global server information dictionary:
-        p.server_info_dict[server_number] = (server_number, is_passworded, map_name, defenders,
+        p.server_info_dict[server_number] = (server_number, is_passworded, mission_index, defenders,
                                              connecting, wave_number, total_waves, round_state,
                                              client_ip, port_number, int(time()))
 
