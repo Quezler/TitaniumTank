@@ -77,7 +77,7 @@ function build_server_table(csv_data)
 				<th>Last updated</th></tr>'];
 	
 	// Per row:
-	for (var i = 1; i < sorted_server_data.length; i++)
+	for (var i = 0; i < sorted_server_data.length; i++)
 	{
 		// Grab the row object:
 		var row = sorted_server_data[i];
