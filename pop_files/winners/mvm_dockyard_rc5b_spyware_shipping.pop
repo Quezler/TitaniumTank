@@ -1927,11 +1927,6 @@ WaveSchedule
 			MaxActive 2
 			SpawnCount 2
 			TotalCurrency 100
-			LastSpawnOutput	
-			{
-				Target reset_wave_relay
-				Action Trigger
-			}
 			
 			Squad
 			{
