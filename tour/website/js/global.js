@@ -119,11 +119,13 @@ function draw_statistics_table(csv_data)
 	table.push('<tr><td>Tour Duration</td><td><p style="text-align:center;">' + duration_string + '</p></td></tr>');
 	
 	// Tour deadline:
+	/*
 	var remaining_seconds = 1522652399 - Math.floor(Date.now()/1000);
 	if (remaining_seconds < 0)
 		remaining_seconds = 0;
 	var remaining_string = get_time_left_array(remaining_seconds);
-	table.push('<tr><td>Tour Deadline</td><td><p style="text-align:center;">' + remaining_string + '</p></td></tr>');
+	table.push('<tr><td>Tour Deadline</td><td><p style="text-align:center;">' + remaining_string + '</p></td></tr>');*/	
+	table.push('<tr><td>Tour Deadline</td><td><p style="text-align:center;">To be decided later</p></td></tr>');
 	
 	// Last updated time. Close the table while we're here.
 	var d = new Date();
