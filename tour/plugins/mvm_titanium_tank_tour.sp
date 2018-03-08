@@ -276,7 +276,7 @@ public bool OnClientConnect(int iClient, char[] RejectMessage, int maxlen)
 
 // Fired every time a client joins the server.
 
-public Action Event_PlayerConnect(Event event, const char[] sEventName, bool db)
+public Action TT_PlayerConnect(Event event, const char[] sEventName, bool db)
 {
 	// If a server is full, people may still try to connect to it. This will print the "<name> has joined the game."
 	// message even if OnClientConnect drops the player from the server. This can become very spammy and there's no
