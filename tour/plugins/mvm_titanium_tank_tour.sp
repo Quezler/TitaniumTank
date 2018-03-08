@@ -141,6 +141,9 @@ public void OnPluginStart()
 	HookEvent("mvm_wave_complete", 	TT_OnWaveComplete);		// Fired every time a wave finishes.
  	HookEvent("player_team", 		TT_PlayerTeam);			// Fired every time a player changes team.
  	
+ 	// Hook to this event to block the "player joined the game" spam that happens when someone tries to join the server, only to be rejected.
+	HookEvent("player_connect_client", TT_PlayerConnect, EventHookMode_Pre);
+
  	// Initialize global variables from the file system:
  	TT_InitFileSystem();
  	
@@ -265,6 +268,27 @@ public bool OnClientConnect(int iClient, char[] RejectMessage, int maxlen)
 	// 
 	// Players should download and install the tour pack ahead of time to skip the fastdl wait
 	// and load into the server as quick as possible.
+}
+
+
+
+
+
+// Fired every time a client joins the server.
+
+public Action Event_PlayerConnect(Event event, const char[] sEventName, bool db)
+{
+	// If a server is full, people may still try to connect to it. This will print the "<name> has joined the game."
+	// message even if OnClientConnect drops the player from the server. This can become very spammy and there's no
+	// way to stop the spam since players cannot votekick or ban a client that isn't even fully connected.
+	
+	// We do not need to do anything here if we do not have enough players on RED:
+	if (TT_GetTotalDefendingPlayers() < MAX_MVM_PLAYERS)
+		return Plugin_Continue;
+	
+	// Block the event broadcast:
+	event.BroadcastDisabled = true;
+	return Plugin_Changed;
 }
 
 
