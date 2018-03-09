@@ -219,7 +219,7 @@ public void OnClientDisconnect_Post(int iClient)
 public void OnClientPutInServer(int iClient)
 {
 	// If a bot is being added, ignore them.
-	if (IsFakeClient(iClient))
+	if (TT_IsFakeClient(iClient))
 		return;
 	
 	// If we have enough players already, drop the client:
@@ -250,7 +250,7 @@ public bool OnClientConnect(int iClient, char[] RejectMessage, int maxlen)
 {
 	// For some bizarre reason, bots sometimes trigger this function.
 	// Check if this client is a bot. If so, always return true.
-	if (IsFakeClient(iClient))
+	if (TT_IsFakeClient(iClient))
 		return true;
 	
 	// If the server is full, copy the rejection message and return false to drop the client:
@@ -624,7 +624,7 @@ public Action TT_PlayerTeam(Event hEvent, const char[] EventName, bool DontBroad
 	int iClient = GetClientOfUserId(hEvent.GetInt("userid"));
 	
 	// If the client is a bot, ignore it:
-	if (IsFakeClient(iClient))
+	if (TT_IsFakeClient(iClient))
 		return;
 	
 	// Grab the team they are switching to:
@@ -658,7 +658,7 @@ public Action TT_OnWaveStart(Event hEvent, const char[] EventName, bool DontBroa
 			continue;
 		
 		// If this client is not in game or is a bot, skip:
-		if (!IsClientInGame(i) || IsFakeClient(i))
+		if (!IsClientInGame(i) || TT_IsFakeClient(i))
 			continue;
 		
 		// If this client is not on team RED, but they are in game (i.e. not stuck on fastdl),
@@ -757,7 +757,7 @@ public Action TT_ReportServerData(Handle timer)
 	for (int i = 1; i <= MaxClients; i++)
 	{
 		// Skip non-connected clients and bots:
-		if (!IsClientConnected(i) || IsFakeClient(i))
+		if (!IsClientConnected(i) || TT_IsFakeClient(i))
 			continue;
 		
 		// Increment the proper counter:
@@ -1011,7 +1011,7 @@ stock bool TT_IsValidPlayer(int iClient)
 		return false;
 	
 	// Bots
-	if (IsFakeClient(iClient))
+	if (TT_IsFakeClient(iClient))
 		return false;
 	
 	// Non-RED players
@@ -1020,6 +1020,29 @@ stock bool TT_IsValidPlayer(int iClient)
 	
 	// If we get here, assume valid player.
 	return true;
+}
+
+
+
+
+
+// Returns true if a client is a fakeclient, false otherwise.
+// This uses a more rigorous check.
+
+stock bool TT_IsFakeClient(int iClient)
+{
+	// Needs to be connected:
+	if (!IsClientConnected(iClient))
+		return false;
+	
+	// Check normal fakeclient first:
+	if (IsFakeClient(iClient))
+		return true;
+	
+	// Check steam ID as last resort.
+	char Auth[16];
+	GetClientAuthId(iClient, AuthId_Engine, Auth, sizeof(Auth));
+	return StrEqual(Auth, "BOT", false);
 }
 
 
