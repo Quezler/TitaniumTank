@@ -218,6 +218,11 @@ public void OnClientDisconnect_Post(int iClient)
 
 public void OnClientPutInServer(int iClient)
 {
+	// If a bot is being added, ignore them.
+	if (IsFakeClient(iClient))
+		return;
+	
+	// If we have enough players already, drop the client:
 	if (TT_GetTotalDefendingPlayers() == MAX_MVM_PLAYERS)
 		KickClient(iClient, CLIENT_KICK_MESSAGE);
 }
