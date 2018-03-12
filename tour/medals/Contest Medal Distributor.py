@@ -188,8 +188,7 @@ class potato(object):
         #Because shit can hit the fan at any point (because Valve),
         #wrap the whole operation around a try/except.
         try:
-            self.send_medal_post_request(api_key, promoid, steam64)
-            return True             #Nothing blew up
+            return self.send_medal_post_request(api_key, promoid, steam64)          #Nothing blew up
 
         #Something blew up, return False for failure:
         except:
