@@ -68,6 +68,7 @@ function build_server_table(csv_data)
 	// Init the table:
 	var table = ['<table class="server_main_table">\
 				<tr><th><img src="https://hydrogen-mvm.github.io/TitaniumTank/img/lock.png"/></th>\
+				<th>Location</th>\
 				<th>Server Name</th>\
 				<th>Current Map</th>\
 				<th>Players</th>\
@@ -104,6 +105,10 @@ function build_server_table(csv_data)
 		{
 			table.push('<tr><td></td>');
 		}
+		
+		// Second is country location.
+		// We generate this by hard-coding in the IP addresses:
+		table.push('<td><p style="text-align:center;">' + get_country_string(server_ip) + '</p></td>');
 
 		// Second piece of data is the server name:
 		table.push('<td><p style="text-align:center;">Titanium Tank Server #' + server_number + '</p></td>');
@@ -254,6 +259,26 @@ function server_sort_callback(row1, row2)
 	
 	// They both are equal.
 	return 0;
+}
+
+
+
+
+
+// Returns the country location string based on the server location:
+
+function get_country_string(ip_address)
+{
+	// Swordstone's servers
+	if (ip_address === "76.110.2.183")
+		return '<img src="http://icons.iconarchive.com/icons/famfamfam/flag/16/us-icon.png" alt="US"/>&nbsp;MIA';
+	
+	// Hyperion's servers
+	if (ip_address === "78.31.71.193")
+		return '<img src="http://icons.iconarchive.com/icons/famfamfam/flag/16/de-icon.png" alt="DE"/>&nbsp;GER';
+	
+	// Assume Philadelphia for all else (Hydrogen's servers):
+	return '<img src="http://icons.iconarchive.com/icons/famfamfam/flag/16/us-icon.png" alt="US"/>&nbsp;PHL';
 }
 
 
